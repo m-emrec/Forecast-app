@@ -7,6 +7,7 @@ import 'package:weather/features/weather/data/datasources/remote/weather_api_ser
 import 'package:weather/injection_container.dart';
 
 import 'features/weather/presentation/bloc/weather_bloc.dart';
+import 'features/weather/presentation/pages/home.dart';
 
 void main() async {
   await initializeDependencies();
@@ -20,27 +21,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       title: 'Flutter Demo',
-      home: HomePAge(),
-    );
-  }
-}
-
-class HomePAge extends StatelessWidget {
-  HomePAge({super.key});
-  final WeatherBloc _bloc = WeatherBloc(sl());
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<WeatherBloc, WeatherState>(
-      bloc: _bloc,
-      builder: (context, state) {
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _bloc.add(Weather()),
-          ),
-        );
-      },
+      home: HomePage(),
     );
   }
 }
