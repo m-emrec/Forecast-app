@@ -71,6 +71,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    //
     return SliverAppBar(
       // title: AppBar(
       //   title: const Text("KAdıköy"),
