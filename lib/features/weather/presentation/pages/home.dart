@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:weather/core/constants/logger.dart';
+import 'package:weather/core/extensions/context_extension.dart';
+import 'package:weather/core/extensions/empty_padding.dart';
+import 'package:weather/core/extensions/image_extension.dart';
+import 'package:weather/features/weather/presentation/widgets/hourly_weather_section.dart';
+import 'package:weather/features/weather/presentation/widgets/weather_data_view_manager.dart';
+
+import '../widgets/sliver_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,127 +20,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        controller: _controller,
-        slivers: [
-          CustomAppBar(
-            scrollController: _controller,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 25,
-              (context, index) => SizedBox(
-                height: 50,
-              ),
+      body: SizedBox(
+        height: 2000,
+        child: CustomScrollView(
+          controller: _controller,
+          slivers: [
+            CustomAppBar(
+              scrollController: _controller,
             ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
-class CustomAppBar extends StatefulWidget {
-  const CustomAppBar({super.key, required this.scrollController});
-  final ScrollController scrollController;
-  @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
-}
+            const SliverToBoxAdapter(
+              child: WeatherDataViewManager(),
+            ),
 
-class _CustomAppBarState extends State<CustomAppBar> {
-  late bool _isCollapsed;
-  @override
-  void initState() {
-    _isCollapsed = false;
-    widget.scrollController.addListener(() {
-      logger.i("message");
-      logger.i(widget.scrollController.position.pixels);
-      if (widget.scrollController.position.pixels > 259) {
-        setState(() {
-          _isCollapsed = true;
-        });
-      } else {
-        setState(() {
-          _isCollapsed = false;
-        });
-      }
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(() {});
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    //
-    return SliverAppBar(
-      // title: AppBar(
-      //   title: const Text("KAdıköy"),
-      // ),
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF11B5FD),
-              Color(0xFF0F68F4),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: _isCollapsed ? CollapsedView() : ExpandedView(),
+            /// Padding
+            SliverToBoxAdapter(
+              child: (MediaQuery.of(context).size.height * 0.5).ph,
+            )
+          ],
         ),
       ),
-      collapsedHeight: size.height * 0.4,
-      expandedHeight: size.height * 0.75,
-      pinned: true,
-    );
-  }
-}
-
-class ExpandedView extends StatefulWidget {
-  const ExpandedView({super.key});
-
-  @override
-  State<ExpandedView> createState() => _ExpandedViewState();
-}
-
-class _ExpandedViewState extends State<ExpandedView> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Center(
-          child: Text("Expanded"),
-        ),
-      ],
-    );
-  }
-}
-
-class CollapsedView extends StatefulWidget {
-  const CollapsedView({super.key});
-
-  @override
-  State<CollapsedView> createState() => _CollapsedViewState();
-}
-
-class _CollapsedViewState extends State<CollapsedView> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Center(
-          child: Text("Collapsed"),
-        ),
-      ],
     );
   }
 }

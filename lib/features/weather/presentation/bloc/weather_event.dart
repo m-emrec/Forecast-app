@@ -8,3 +8,9 @@ abstract class WeatherEvent extends Equatable {
 }
 
 class Weather extends WeatherEvent {}
+
+class WeatherFetchDataEvent extends WeatherEvent {}
+
+class ExpandedViewEvent extends WeatherEvent {}
+
+class CollapsedViewEvent extends WeatherEvent {}
