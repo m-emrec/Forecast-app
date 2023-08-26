@@ -13,15 +13,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetWeatherDataUseCase _getWeatherDataUseCase;
   WeatherBloc(this._getWeatherDataUseCase) : super(WeatherInitial()) {
     on<WeatherEvent>((event, emit) {});
-    on<Weather>(onWeathe);
+    on<WeatherFetchDataEvent>(onWeatherFetchDataEvent);
     on<CollapsedViewEvent>(onCollapsedViewEvent);
     on<ExpandedViewEvent>(onExpandedViewEvent);
-  }
-
-  FutureOr<void> onWeathe(Weather event, Emitter<WeatherState> emit) async {
-    logger.i("message");
-    final dataState = await _getWeatherDataUseCase.getWeatherData();
-    logger.i(dataState.data);
   }
 
   FutureOr<void> onCollapsedViewEvent(
@@ -34,5 +28,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       ExpandedViewEvent event, Emitter<WeatherState> emit) {
     logger.i("Expanded");
     emit(ExpandedViewState());
+  }
+
+  FutureOr<void> onWeatherFetchDataEvent(
+      WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
+    // final dataState
   }
 }

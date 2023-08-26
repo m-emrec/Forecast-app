@@ -12,6 +12,7 @@ class CurrentWeatherEntity {
   final String? locationName;
   final String? country;
   final String? region;
+
   CurrentWeatherEntity({
     this.lastUpdated,
     this.temp,

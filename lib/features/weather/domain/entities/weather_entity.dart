@@ -2,7 +2,7 @@
 import 'package:weather/features/weather/domain/entities/current_weather_entity.dart';
 import 'package:weather/features/weather/domain/entities/day_entity.dart';
 
-class WeatherEntity {
+abstract class WeatherEntity {
   final CurrentWeatherEntity? currentWeather;
   final DayEntity? dayWeather;
 
