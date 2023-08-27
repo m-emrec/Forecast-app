@@ -1,3 +1,4 @@
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/constants/strings.dart';
 import 'package:weather/core/resources/data_state.dart';
 import 'package:weather/features/weather/data/datasources/remote/weather_api_service.dart';
@@ -27,16 +28,16 @@ class WeatherRepoImpl implements WeatherRepo {
       final httpResponse =
           await _weatherApiService.fetchCurrentWeatherDataFromApi(
         apiKey: API_KEY,
-        location: "Turkey",
+        location: "Istanbul",
       );
 
       if (httpResponse.response.statusCode == 200) {
         return DataSuccess(httpResponse.data);
       } else {
-        return DataFailed(httpResponse.response.statusCode.toString());
+        return DataFailed(httpResponse.response.statusCode);
       }
     } catch (e) {
-      return DataFailed(e);
+      return DataFailed(e.toString());
     }
   }
 }

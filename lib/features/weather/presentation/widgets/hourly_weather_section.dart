@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
+import 'package:weather/features/weather/data/models/weather_model.dart';
+import 'package:weather/features/weather/domain/entities/weather_entity.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 
 class HourlyWeatherSection extends StatefulWidget {
   const HourlyWeatherSection({super.key});
@@ -11,6 +17,16 @@ class HourlyWeatherSection extends StatefulWidget {
 }
 
 class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
+  late GetIt sl;
+  late WeatherEntity _data;
+  @override
+  void initState() {
+    sl = GetIt.instance;
+    _data = sl<WeatherEntity>();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,8 +64,9 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
           height: 100,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 24,
+            itemCount: _data.dayWeather!.hourlyWeather.length,
             itemBuilder: (BuildContext context, int index) {
+              final hourlyWeather = _data.dayWeather!.hourlyWeather[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: AspectRatio(
@@ -68,7 +85,7 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
                       children: [
                         /// Deggree
                         Text(
-                          "23°",
+                          hourlyWeather.temp,
                           style: context.textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
@@ -84,7 +101,7 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
 
                         /// Hour
                         Text(
-                          "11:00",
+                          DateFormat.Hm().format(hourlyWeather.time).toString(),
                           style: context.textTheme.bodySmall,
                         ),
                       ],

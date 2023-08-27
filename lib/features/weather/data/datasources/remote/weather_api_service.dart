@@ -10,6 +10,8 @@ import 'package:weather/features/weather/data/models/current_weather_model.dart'
 import 'package:weather/features/weather/data/models/weather_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/day_model.dart';
+
 class WeatherApiService {
   // final String apiKey;
 
@@ -23,11 +25,11 @@ class WeatherApiService {
     required String apiKey,
     String? location,
   }) async {
-    logger.i("message");
     const String _baseUrl = BASE_API_URL;
+// http://api.weatherapi.com/v1/forecast.json?key=ab5247adf474416da98145602232008&q=London&days=1&aqi=no&alerts=no
 
     final String currentWeatherUrl =
-        "${_baseUrl}current.json?key=$apiKey&q=$location";
+        "${_baseUrl}forecast.json?key=$apiKey&q=$location&days=1";
 
     final response = await http.get(Uri.parse(currentWeatherUrl));
 
@@ -37,7 +39,9 @@ class WeatherApiService {
       currentWeather: CurrentWeatherModel.fromJson(
         jsonDecode(response.body),
       ),
-      // dayWeather: DayModel(hourlyWeather: , date: date, maxTemp: maxTemp, minTemp: minTemp, avgTemp: avgTemp, avgHumidity: avgHumidity, isRainy: isRainy, chanceOfRain: chanceOfRain, isSnowy: isSnowy, chanceOfSnow: chanceOfSnow, condition: condition, uv: uv)
+      dayWeather: DayModel.fromJson(
+        jsonDecode(response.body),
+      ),
     );
     final httpResponse = HttpResponseClass(result, response);
     return httpResponse;

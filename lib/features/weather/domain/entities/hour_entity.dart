@@ -9,9 +9,9 @@ class HourEntity {
   final String wind;
   final String humidity;
   final String feelsLike;
-  final String isRainy;
+  final bool isRainy;
   final String chanceOfRain;
-  final String isSnowy;
+  final bool isSnowy;
   final String chanceOfSnow;
   final String uv;
   HourEntity({
@@ -51,9 +51,9 @@ class HourEntity {
       wind: wind ?? this.wind,
       humidity: humidity ?? this.humidity,
       feelsLike: feelsLike ?? this.feelsLike,
-      isRainy: isRainy ?? this.isRainy,
+      isRainy: isRainy == "1" ? true : false,
       chanceOfRain: chanceOfRain ?? this.chanceOfRain,
-      isSnowy: isSnowy ?? this.isSnowy,
+      isSnowy: isSnowy == "1" ? true : false,
       chanceOfSnow: chanceOfSnow ?? this.chanceOfSnow,
       uv: uv ?? this.uv,
     );
@@ -85,9 +85,9 @@ class HourEntity {
       wind: map['wind'] as String,
       humidity: map['humidity'] as String,
       feelsLike: map['feelsLike'] as String,
-      isRainy: map['isRainy'] as String,
+      isRainy: map['isRainy'].toString() == "1" ? true : false,
       chanceOfRain: map['chanceOfRain'] as String,
-      isSnowy: map['isSnowy'] as String,
+      isSnowy: map['isSnowy'].toString() == "1" ? true : false,
       chanceOfSnow: map['chanceOfSnow'] as String,
       uv: map['uv'] as String,
     );

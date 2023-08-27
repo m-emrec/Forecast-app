@@ -15,7 +15,7 @@ class WeatherInitial extends WeatherState {}
 class WeatherLoadingState extends WeatherState {}
 
 class WeatherLoadedSuccessState extends WeatherState {
-  final WeatherModel data;
+  final WeatherEntity data;
   const WeatherLoadedSuccessState({
     required this.data,
   });

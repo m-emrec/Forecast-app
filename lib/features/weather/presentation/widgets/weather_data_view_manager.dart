@@ -30,9 +30,6 @@ class _WeatherDataViewManagerState extends State<WeatherDataViewManager> {
     return BlocConsumer<WeatherBloc, WeatherState>(
       bloc: sl<WeatherBloc>(),
       listener: (context, state) {
-        logger.i(
-          state,
-        );
         if (state is ExpandedViewState) {
           setState(() {
             _isExpanded = true;
@@ -47,7 +44,6 @@ class _WeatherDataViewManagerState extends State<WeatherDataViewManager> {
       listenWhen: (previous, current) => current is WeatherActionState,
       buildWhen: (previous, current) => current is WeatherActionState,
       builder: (context, state) {
-        logger.d(state);
         return AnimatedCrossFade(
           firstChild: const HourlyWeatherSection(),
           secondChild: const DailyWeatherSection(),
