@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,7 @@ import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
+import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
@@ -63,21 +66,44 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
         SizedBox(
           height: 100,
           child: ListView.builder(
+            clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
-            itemCount: _data.dayWeather!.hourlyWeather.length,
+            itemCount: _data.dayWeather!.first.hourlyWeather.length,
             itemBuilder: (BuildContext context, int index) {
-              final hourlyWeather = _data.dayWeather!.hourlyWeather[index];
+              final hourlyWeather =
+                  _data.dayWeather!.first.hourlyWeather[index];
+              final bool _isCurrentTime =
+                  hourlyWeather.time.hour == DateTime.now().hour;
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: AspectRatio(
                   aspectRatio: 2 / 3,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.transparent,
+                      color: _isCurrentTime ? null : Colors.transparent,
                       border: Border.all(
                         width: 1,
                         color: const Color(0xFFDBEAFD),
                       ),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF11B5FD),
+                          Color(0xFF0F68F4),
+                        ],
+                      ),
+                      boxShadow: _isCurrentTime
+                          ? [
+                              BoxShadow(
+                                color: const Color(0xFF73B2EF).withOpacity(0.5),
+                                offset: const Offset(0, 2),
+                                spreadRadius: 4,
+                                blurRadius: 8,
+                                // blurStyle: BlurStyle.outer,
+                              ),
+                            ]
+                          : null,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Column(
@@ -85,10 +111,18 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
                       children: [
                         /// Deggree
                         Text(
-                          hourlyWeather.temp,
+                          "${hourlyWeather.temp}°",
                           style: context.textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
+                            shadows: _isCurrentTime
+                                ? [
+                                    const BoxShadow(
+                                      offset: Offset(0, 2),
+                                      blurRadius: 12,
+                                    ),
+                                  ]
+                                : null,
                           ),
                         ),
 
@@ -96,7 +130,9 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
                         Image(
                           height: 24,
                           width: 24,
-                          image: AssetImage("snow".toPng),
+                          image: AssetImage(
+                            hourlyWeather.condition.getIcon.toPngDayIcon,
+                          ),
                         ),
 
                         /// Hour
@@ -111,6 +147,10 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
               );
             },
           ),
+        ),
+
+        const SizedBox(
+          height: 1000,
         ),
       ],
     );

@@ -30,10 +30,10 @@ class _LoadedDataViewState extends State<LoadedDataView> {
               child: WeatherDataViewManager(),
             ),
 
-            /// Padding
-            SliverToBoxAdapter(
-              child: (MediaQuery.of(context).size.height * 0.5).ph,
-            )
+            // /// Padding
+            // SliverToBoxAdapter(
+            //   child: (MediaQuery.of(context).size.height * 0.5).ph,
+            // )
           ],
         ),
       ),

@@ -7,6 +7,6 @@ import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 class WeatherModel extends WeatherEntity {
   WeatherModel({
     CurrentWeatherModel? currentWeather,
-    DayModel? dayWeather,
+    List<DayModel>? dayWeather,
   }) : super(currentWeather: currentWeather, dayWeather: dayWeather);
 }

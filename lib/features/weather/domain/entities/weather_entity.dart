@@ -4,7 +4,7 @@ import 'package:weather/features/weather/domain/entities/day_entity.dart';
 
 abstract class WeatherEntity {
   final CurrentWeatherEntity? currentWeather;
-  final DayEntity? dayWeather;
+  final List<DayEntity>? dayWeather;
 
   WeatherEntity({
     this.currentWeather,

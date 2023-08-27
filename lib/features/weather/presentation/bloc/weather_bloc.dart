@@ -40,7 +40,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   FutureOr<void> onWeatherFetchDataEvent(
       WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
     emit(WeatherLoadingState());
-
     final dataState = await _getWeatherDataUseCase.getWeatherData();
     // logger.i(dataState.data!.currentWeather!.condition);
 

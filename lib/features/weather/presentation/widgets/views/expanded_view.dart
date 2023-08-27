@@ -5,6 +5,7 @@ import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
+import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/presentation/widgets/title_Section.dart';
 
@@ -79,8 +80,10 @@ class _ExpandedViewState extends State<ExpandedView> {
 
                   /// Weather Image
                   Image(
+                    height: 240,
+                    width: 240,
                     image: AssetImage(
-                      "snow".toPng,
+                      _data.currentWeather!.condition!.getIcon.toPngDayIcon,
                     ),
                   ),
 

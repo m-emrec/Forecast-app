@@ -81,7 +81,7 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
         ),
         Text.rich(
           TextSpan(
-            text: " 23",
+            text: _data.dayWeather![1].avgTemp,
             style: context.textTheme.bodyLarge,
             children: const [
               TextSpan(
@@ -92,7 +92,7 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
           ),
         ),
         Text(
-          "Storm",
+          _data.dayWeather![1].condition,
           style: context.textTheme.bodySmall,
         ),
         16.ph,

@@ -29,20 +29,30 @@ class WeatherApiService {
 // http://api.weatherapi.com/v1/forecast.json?key=ab5247adf474416da98145602232008&q=London&days=1&aqi=no&alerts=no
 
     final String currentWeatherUrl =
-        "${_baseUrl}forecast.json?key=$apiKey&q=$location&days=1";
+        "${_baseUrl}forecast.json?key=$apiKey&q=$location&days=7";
 
     final response = await http.get(Uri.parse(currentWeatherUrl));
 
     // logger.i("------ *Current Weather Json Data* ------\n${response.body}");
+    final json = jsonDecode(response.body);
+    final dayList = json["forecast"]["forecastday"];
+    // logger.i(json["forecast"]["forecastday"].lenght);
 
     final result = WeatherModel(
-      currentWeather: CurrentWeatherModel.fromJson(
-        jsonDecode(response.body),
-      ),
-      dayWeather: DayModel.fromJson(
-        jsonDecode(response.body),
-      ),
-    );
+        currentWeather: CurrentWeatherModel.fromJson(
+          jsonDecode(response.body),
+        ),
+        dayWeather: dayList
+            .map<DayModel>(
+              (e) => DayModel.fromJson(
+                e,
+              ),
+            )
+            .toList()
+        // DayModel.fromJson(
+        //   jsonDecode(response.body),
+        // ),
+        );
     final httpResponse = HttpResponseClass(result, response);
     return httpResponse;
   }

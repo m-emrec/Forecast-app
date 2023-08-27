@@ -1,10 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
+import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/presentation/widgets/info_section.dart';
 
+import '../../../domain/entities/weather_entity.dart';
+import '../../bloc/weather_bloc.dart';
 import '../title_Section.dart';
 
 class CollapsedView extends StatefulWidget {
@@ -15,6 +19,17 @@ class CollapsedView extends StatefulWidget {
 }
 
 class _CollapsedViewState extends State<CollapsedView> {
+  late GetIt sl;
+
+  late WeatherEntity _data;
+  @override
+  void initState() {
+    sl = GetIt.instance;
+    _data = sl<WeatherEntity>();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -63,16 +78,15 @@ class _CollapsedViewState extends State<CollapsedView> {
           ],
         ),
         16.ph,
-
-        /// Weather Image
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            /// Weather Image
             Image(
               width: 128,
               height: 128,
               image: AssetImage(
-                "snow".toPng,
+                _data.dayWeather![1].condition.getIcon.toPngDayIcon,
               ),
             ),
 
@@ -82,8 +96,7 @@ class _CollapsedViewState extends State<CollapsedView> {
         ),
         32.ph,
         const Divider(),
-
-        const InfoSection(),
+        const CollapsedInfoSection(),
       ],
     );
   }
