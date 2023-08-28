@@ -29,9 +29,11 @@ class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
       children: [
         Text.rich(
           TextSpan(
+            /// degree
             text: _data.currentWeather!.temp!,
             style: context.textTheme.bodyLarge,
             children: const [
+              /// ℃ symbole
               TextSpan(
                 text: "℃",
                 style: TextStyle(fontSize: 24),
@@ -39,11 +41,17 @@ class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
             ],
           ),
         ),
+
+        /// Weather Condition
         Text(
           _data.currentWeather!.condition!,
           style: context.textTheme.bodyMedium,
         ),
+
+        /// some spacing
         16.ph,
+
+        /// Last updated date
         Text(
           "${DateFormat.MMMEd().format(_data.currentWeather!.lastUpdated!)} - ${DateFormat.Hm().format(_data.currentWeather!.lastUpdated!)}",
           style: context.textTheme.bodySmall,
@@ -52,6 +60,8 @@ class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
     );
   }
 }
+
+/////
 
 class TitleSectionCollapsed extends StatefulWidget {
   const TitleSectionCollapsed({super.key});
@@ -80,6 +90,7 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
           style: context.textTheme.bodyMedium,
         ),
         Text.rich(
+          /// Tomorrows temp
           TextSpan(
             text: _data.dayWeather![1].avgTemp,
             style: context.textTheme.bodyLarge,
@@ -91,10 +102,14 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
             ],
           ),
         ),
+
+        /// tomorrows weather condition
         Text(
           _data.dayWeather![1].condition,
           style: context.textTheme.bodySmall,
         ),
+
+        /// some spacing
         16.ph,
       ],
     );

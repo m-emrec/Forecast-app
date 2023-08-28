@@ -17,10 +17,59 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   void didChangeDependencies() {
     height = MediaQuery.of(context).size.height;
+
+    /// collapsed height of the appbar
     collapsedHeight = height * 0.5;
+
+    /// expanded height of the appbar
     expandedHeight = height * 0.75;
     super.didChangeDependencies();
   }
+
+  ///border shape of the appbar
+  ShapeBorder get _shape => const RoundedRectangleBorder(
+      side: BorderSide(
+        color: Color(0xFF73B2EF),
+        width: 3,
+      ),
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(
+          72.0,
+        ),
+        bottomRight: Radius.circular(72),
+      ));
+
+  /// decoration of the container
+  Decoration get _decoration => const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(
+            72.0,
+          ),
+          bottomRight: Radius.circular(72),
+        ),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 12),
+            color: Color(0xFF074090),
+            blurRadius: 4,
+          )
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF11B5FD),
+            Color(0xFF0F68F4),
+          ],
+        ),
+      );
+
+  Widget get _flexibleSpace => Container(
+        decoration: _decoration,
+        child: ViewManager(
+          scrollController: widget.scrollController,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +78,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
       collapsedHeight: collapsedHeight,
       expandedHeight: expandedHeight,
       pinned: true,
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(
-          color: Color(0xFF73B2EF),
-          width: 3,
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(
-            72.0,
-          ),
-          bottomRight: Radius.circular(72),
-        ),
-      ),
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(
-              72.0,
-            ),
-            bottomRight: Radius.circular(72),
-          ),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 12),
-              color: Color(0xFF074090),
-              blurRadius: 4,
-            )
-          ],
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF11B5FD),
-              Color(0xFF0F68F4),
-            ],
-          ),
-        ),
-        child: ViewManager(
-          scrollController: widget.scrollController,
-        ),
-      ),
+      shape: _shape,
+      flexibleSpace: _flexibleSpace,
     );
   }
 }

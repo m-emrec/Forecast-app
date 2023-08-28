@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:weather/core/constants/logger.dart';
 import 'package:weather/features/weather/presentation/widgets/daily_weather_section.dart';
 import 'package:weather/features/weather/presentation/widgets/hourly_weather_section.dart';
-import 'package:weather/injection_container.dart';
 
 import '../bloc/weather_bloc.dart';
 
@@ -28,7 +26,7 @@ class _WeatherDataViewManagerState extends State<WeatherDataViewManager> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherBloc, WeatherState>(
-      bloc: sl<WeatherBloc>(),
+      bloc: _weatherBloc,
       listener: (context, state) {
         if (state is ExpandedViewState) {
           setState(() {

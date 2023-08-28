@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
@@ -8,7 +6,6 @@ import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/presentation/widgets/info_section.dart';
 
 import '../../../domain/entities/weather_entity.dart';
-import '../../bloc/weather_bloc.dart';
 import '../title_Section.dart';
 
 class CollapsedView extends StatefulWidget {
@@ -33,7 +30,6 @@ class _CollapsedViewState extends State<CollapsedView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         AppBar(
           forceMaterialTransparency: true,
@@ -58,6 +54,8 @@ class _CollapsedViewState extends State<CollapsedView> {
               ),
             ),
           ),
+
+          /// Title
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -77,6 +75,9 @@ class _CollapsedViewState extends State<CollapsedView> {
             ),
           ],
         ),
+
+        /// some spacing
+
         16.ph,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

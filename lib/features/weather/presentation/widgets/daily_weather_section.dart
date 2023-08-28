@@ -28,52 +28,50 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.transparent,
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: _data.dayWeather!.length - 2,
-          itemBuilder: (BuildContext context, int index) {
-            final day = _data.dayWeather![index + 2];
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: ListTile(
-                /// Day
-                leading: Text(
-                  DateFormat.E().format(day.date),
-                  style: context.textTheme.bodySmall!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-
-                /// Coondition
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      height: 32,
-                      width: 32,
-                      image: AssetImage(day.condition.getIcon.toPngDayIcon),
-                    ),
-                    4.pw,
-                    Text(
-                      day.condition,
-                      style: context.textTheme.labelSmall,
-                    ),
-                  ],
-                ),
-
-                /// Deggree
-                trailing: Text(
-                  "${day.avgTemp}°",
-                  style: context.textTheme.labelMedium,
-                ),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemCount: _data.dayWeather!.length - 2,
+        itemBuilder: (BuildContext context, int index) {
+          final day = _data.dayWeather![index + 2];
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: ListTile(
+              /// Day
+              leading: Text(
+                DateFormat.E().format(day.date),
+                style: context.textTheme.bodySmall!
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
-            );
-          },
-        ),
+
+              /// Coondition
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(
+                    height: 32,
+                    width: 32,
+                    image: AssetImage(day.condition.getIcon.toPngDayIcon),
+                  ),
+                  4.pw,
+                  Text(
+                    day.condition,
+                    style: context.textTheme.labelSmall,
+                  ),
+                ],
+              ),
+
+              /// Deggree
+              trailing: Text(
+                "${day.avgTemp}°",
+                style: context.textTheme.labelMedium,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

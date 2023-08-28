@@ -54,6 +54,8 @@ class _ExpandedViewState extends State<ExpandedView> {
                     leading: GestureDetector(
                       child: Image.asset("menu-button".toPng),
                     ),
+
+                    /// Title
                     title: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -71,11 +73,13 @@ class _ExpandedViewState extends State<ExpandedView> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: GestureDetector(
-                          child: Image.asset("settings-button".toPng),
+                          child: const Icon(Icons.settings_outlined),
                         ),
                       ),
                     ],
                   ),
+
+                  /// Some spacing
                   16.ph,
 
                   /// Weather Image
@@ -93,7 +97,7 @@ class _ExpandedViewState extends State<ExpandedView> {
                   const Divider(),
 
                   /// More Info Section
-                  const InfoSection(),
+                  const ExpandedInfoSection(),
                 ],
               ),
             ),

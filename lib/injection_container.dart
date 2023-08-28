@@ -8,20 +8,6 @@ import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  /// register Dio
-  // sl.registerSingleton<Dio>(Dio());
-
-  /// register NewsApiService
-  // sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
-
-  /// register ArticleRepo
-  // sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl()));
-  // register @[GetArticleUseCase]
-  // sl.registerSingleton<GetArticlesUseCase>(GetArticlesUseCase(sl()));
-
-  /// register Bloc
-  // sl.registerFactory<RemoteArticleBloc>(() => RemoteArticleBloc(sl()));
-
   sl.registerSingleton<WeatherApiService>(WeatherApiService());
 
   sl.registerSingleton<WeatherRepo>(WeatherRepoImpl(sl()));

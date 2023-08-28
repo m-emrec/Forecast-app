@@ -41,11 +41,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
     emit(WeatherLoadingState());
     final dataState = await _getWeatherDataUseCase.getWeatherData();
-    // logger.i(dataState.data!.currentWeather!.condition);
 
     /// if data is loaded successfully emit LoadedSuccessStat
     if (dataState is DataSuccess) {
-      // logger.i("success");
       emit(
         WeatherLoadedSuccessState(data: dataState.data!),
       );
@@ -53,7 +51,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
 
     /// if data is not loaded successfully emit LoadedFailState
-
     if (dataState is DataFailed) {
       emit(
         WeatherLoadedFailState(error: dataState.exception ?? ""),

@@ -16,6 +16,7 @@ extension WeatherIconManager on String {
     if (contains("cloud")) {
       condition = "Cloudy";
     }
+
     switch (condition) {
       case "Sunny" || "Clear":
         return "sun";
@@ -30,7 +31,7 @@ extension WeatherIconManager on String {
 
       default:
         logger.i(condition);
-        return "Sunny";
+        return "sun";
     }
   }
 }

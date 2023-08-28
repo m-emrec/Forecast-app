@@ -22,18 +22,15 @@ class _LoadedDataViewState extends State<LoadedDataView> {
         child: CustomScrollView(
           controller: _controller,
           slivers: [
+            ///
             CustomAppBar(
               scrollController: _controller,
             ),
 
+            ///
             const SliverToBoxAdapter(
               child: WeatherDataViewManager(),
             ),
-
-            // /// Padding
-            // SliverToBoxAdapter(
-            //   child: (MediaQuery.of(context).size.height * 0.5).ph,
-            // )
           ],
         ),
       ),

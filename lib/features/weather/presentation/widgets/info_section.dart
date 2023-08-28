@@ -5,16 +5,16 @@ import 'package:weather/core/extensions/image_extension.dart';
 
 import '../../domain/entities/weather_entity.dart';
 
-class InfoSection extends StatefulWidget {
-  const InfoSection({
+class ExpandedInfoSection extends StatefulWidget {
+  const ExpandedInfoSection({
     super.key,
   });
 
   @override
-  State<InfoSection> createState() => _InfoSectionState();
+  State<ExpandedInfoSection> createState() => _ExpandedInfoSectionState();
 }
 
-class _InfoSectionState extends State<InfoSection> {
+class _ExpandedInfoSectionState extends State<ExpandedInfoSection> {
   late GetIt sl;
   late WeatherEntity _data;
   @override
@@ -36,7 +36,6 @@ class _InfoSectionState extends State<InfoSection> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           /// Wind
-
           SizedBox(
             width: width * 0.3,
             child: Column(
@@ -83,7 +82,7 @@ class _InfoSectionState extends State<InfoSection> {
                   width: 24,
                 ),
                 Text(
-                  _data.dayWeather!.first?.chanceOfRain ?? "?",
+                  _data.dayWeather?.first.chanceOfRain ?? "?",
                   style: context.textTheme.labelMedium,
                 ),
                 FittedBox(

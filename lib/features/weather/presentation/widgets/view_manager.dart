@@ -5,6 +5,8 @@ import 'package:weather/features/weather/presentation/widgets/views/collapsed_vi
 import 'package:weather/features/weather/presentation/widgets/views/expanded_view.dart';
 
 class ViewManager extends StatefulWidget {
+  /// Manages the view . In default it returns [ExpandedView] if user scrolls the
+  /// screen it returns [CollapsedView] and changes the state.
   const ViewManager({
     Key? key,
     required this.scrollController,
@@ -17,6 +19,7 @@ class ViewManager extends StatefulWidget {
 
 class _ViewManagerState extends State<ViewManager>
     with SingleTickerProviderStateMixin {
+  ///
   late bool _isExpanded;
   late double height;
   late double expandedHeight;
@@ -25,21 +28,24 @@ class _ViewManagerState extends State<ViewManager>
   late WeatherBloc _weatherBloc;
 
   void _scrollManager(ScrollController controller) {
-    controller.addListener(() {
-      final double position = controller.position.pixels;
+    controller.addListener(
+      () {
+        final double position = controller.position.pixels;
 
-      if (collapsedHeight - position < expandedHeight * 0.5) {
-        setState(() {
-          _isExpanded = false;
-          _weatherBloc.add(CollapsedViewEvent());
-        });
-      } else {
-        setState(() {
-          _isExpanded = true;
-          _weatherBloc.add(ExpandedViewEvent());
-        });
-      }
-    });
+        ///
+        if (collapsedHeight - position < expandedHeight * 0.5) {
+          setState(() {
+            _isExpanded = false;
+            _weatherBloc.add(CollapsedViewEvent());
+          });
+        } else {
+          setState(() {
+            _isExpanded = true;
+            _weatherBloc.add(ExpandedViewEvent());
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -54,6 +60,8 @@ class _ViewManagerState extends State<ViewManager>
   void initState() {
     _weatherBloc = sl<WeatherBloc>();
     _isExpanded = true;
+
+    /// add [ExpandedViewEvent] to the Bloc
     _weatherBloc.add(ExpandedViewEvent());
     _scrollManager(widget.scrollController);
 
@@ -63,6 +71,7 @@ class _ViewManagerState extends State<ViewManager>
   @override
   void dispose() {
     widget.scrollController.removeListener(() {});
+    widget.scrollController.dispose();
     super.dispose();
   }
 

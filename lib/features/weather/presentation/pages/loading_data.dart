@@ -17,9 +17,10 @@ class _LoadingDataState extends State<LoadingData> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        body: Center(
-      child: CircularProgressIndicator(),
-    ));
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }
 
@@ -158,7 +159,7 @@ class _LoadingExpandedViewsState extends State<LoadingExpandedViews> {
               const Divider(),
 
               /// More Info Section
-              const InfoSection(),
+              const ExpandedInfoSection(),
             ],
           ),
         ),
