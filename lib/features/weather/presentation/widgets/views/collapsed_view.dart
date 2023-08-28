@@ -63,7 +63,7 @@ class _CollapsedViewState extends State<CollapsedView> {
             children: [
               const Icon(Icons.calendar_today_outlined),
               8.pw,
-              const Text("7 days"),
+              const Text("14 days"),
             ],
           ),
 

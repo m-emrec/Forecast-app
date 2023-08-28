@@ -29,7 +29,7 @@ class WeatherApiService {
 // http://api.weatherapi.com/v1/forecast.json?key=ab5247adf474416da98145602232008&q=London&days=1&aqi=no&alerts=no
 
     final String currentWeatherUrl =
-        "${_baseUrl}forecast.json?key=$apiKey&q=$location&days=7";
+        "${_baseUrl}forecast.json?key=$apiKey&q=$location&days=14";
 
     final response = await http.get(Uri.parse(currentWeatherUrl));
 

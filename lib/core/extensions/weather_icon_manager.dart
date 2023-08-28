@@ -1,6 +1,9 @@
+import '../constants/logger.dart';
+
 extension WeatherIconManager on String {
   String get getIcon {
     String condition = this;
+
     if (contains("rain")) {
       condition = "Rainy";
     }
@@ -9,6 +12,9 @@ extension WeatherIconManager on String {
     }
     if (contains("thunder")) {
       condition = "Stormy";
+    }
+    if (contains("cloud")) {
+      condition = "Cloudy";
     }
     switch (condition) {
       case "Sunny" || "Clear":
@@ -23,6 +29,7 @@ extension WeatherIconManager on String {
         return "storm";
 
       default:
+        logger.i(condition);
         return "Sunny";
     }
   }
