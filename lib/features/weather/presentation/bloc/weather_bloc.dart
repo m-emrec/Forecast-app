@@ -7,6 +7,7 @@ import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/resources/data_state.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
+import 'package:weather/features/weather/domain/usecases/get_location_use_case.dart';
 import 'package:weather/features/weather/domain/usecases/get_weather_data.dart';
 
 import '../../../../injection_container.dart';
@@ -16,7 +17,9 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final GetWeatherDataUseCase _getWeatherDataUseCase;
-  WeatherBloc(this._getWeatherDataUseCase) : super(WeatherInitial()) {
+  final GetLocationUseCase _getLocationUseCase;
+  WeatherBloc(this._getWeatherDataUseCase, this._getLocationUseCase)
+      : super(WeatherInitial()) {
     on<WeatherEvent>((event, emit) {});
     on<WeatherFetchDataEvent>(onWeatherFetchDataEvent);
     on<CollapsedViewEvent>(onCollapsedViewEvent);
@@ -40,22 +43,35 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   FutureOr<void> onWeatherFetchDataEvent(
       WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
     emit(WeatherLoadingState());
-    final dataState = await _getWeatherDataUseCase.getWeatherData();
+    final location = await _getLocationUseCase.getLocation();
 
-    /// if data is loaded successfully emit LoadedSuccessStat
-    if (dataState is DataSuccess) {
-      emit(
-        WeatherLoadedSuccessState(data: dataState.data!),
-      );
-      sl.registerSingleton<WeatherEntity>(dataState.data!);
-    }
+    if (location is DataSuccess) {
+      final double latitude = location.data!.latitude;
+      final double longitude = location.data!.longitude;
+      final String _coordinate = "$latitude,$longitude";
+      final dataState =
+          await _getWeatherDataUseCase.getWeatherData(_coordinate);
+      logger.i(location.data);
 
-    /// if data is not loaded successfully emit LoadedFailState
-    if (dataState is DataFailed) {
+      /// if data is loaded successfully emit LoadedSuccessStat
+      if (dataState is DataSuccess) {
+        emit(
+          WeatherLoadedSuccessState(data: dataState.data!),
+        );
+        sl.registerSingleton<WeatherEntity>(dataState.data!);
+      }
+
+      /// if data is not loaded successfully emit LoadedFailState
+      if (dataState is DataFailed) {
+        emit(
+          WeatherLoadedFailState(error: dataState.exception ?? ""),
+        );
+        logger.e(dataState.exception);
+      }
+    } else {
       emit(
-        WeatherLoadedFailState(error: dataState.exception ?? ""),
+        WeatherLoadedFailState(error: location.exception ?? " Unknown"),
       );
-      logger.e(dataState.exception);
     }
   }
 }

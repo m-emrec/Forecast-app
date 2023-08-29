@@ -7,7 +7,7 @@ class GetWeatherDataUseCase {
 
   GetWeatherDataUseCase(this._weatherRepo);
 
-  Future<DataState<WeatherEntity>> getWeatherData() {
-    return _weatherRepo.getWeatherData();
+  Future<DataState<WeatherEntity>> getWeatherData(String location) {
+    return _weatherRepo.getWeatherData(location);
   }
 }

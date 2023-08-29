@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather/core/constants/logger.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     sl<WeatherBloc>().add(WeatherFetchDataEvent());
+
     super.initState();
   }
 
