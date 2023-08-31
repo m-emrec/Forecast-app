@@ -10,6 +10,7 @@ import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 
 import 'hourly_weather_data_list.dart';
 
@@ -51,21 +52,24 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.keyboard_double_arrow_up_outlined,
-                    color: context.textTheme.bodySmall!.color,
-                    size: 14,
-                  ),
-                  Text(
-                    "14 days",
-                    style: context.textTheme.bodySmall!.copyWith(
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
+              GestureDetector(
+                onTap: () => sl<WeatherBloc>().add(CollapsedViewEvent()),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.keyboard_double_arrow_up_outlined,
+                      color: context.textTheme.bodySmall!.color,
+                      size: 14,
                     ),
-                  ),
-                ],
+                    Text(
+                      "14 days",
+                      style: context.textTheme.bodySmall!.copyWith(
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -73,11 +77,6 @@ class _HourlyWeatherSectionState extends State<HourlyWeatherSection> {
 
         /// Hourly List
         HourlyWeatherDataList(data: _data),
-
-        /// Spacing to be able to scroll
-        const SizedBox(
-          height: 1000,
-        ),
       ],
     );
   }

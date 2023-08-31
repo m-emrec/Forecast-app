@@ -13,7 +13,7 @@ extension WeatherIconManager on String {
     if (contains("thunder")) {
       condition = "Stormy";
     }
-    if (contains("cloud")) {
+    if (contains("cloud") || contains("Overcast")) {
       condition = "Cloudy";
     }
 

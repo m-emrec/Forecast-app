@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:weather/features/weather/presentation/widgets/view_manager.dart';
 
 class CustomAppBar extends StatefulWidget {
-  const CustomAppBar({super.key, required this.scrollController});
-  final ScrollController scrollController;
+  const CustomAppBar({
+    super.key,
+  });
+
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
@@ -22,7 +24,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     collapsedHeight = height * 0.5;
 
     /// expanded height of the appbar
-    expandedHeight = height * 0.75;
+    expandedHeight = height * 0.8;
     super.didChangeDependencies();
   }
 
@@ -65,21 +67,28 @@ class _CustomAppBarState extends State<CustomAppBar> {
       );
 
   Widget get _flexibleSpace => Container(
+        constraints: BoxConstraints(
+          maxHeight: expandedHeight,
+          minHeight: collapsedHeight,
+        ),
         decoration: _decoration,
         child: ViewManager(
-          scrollController: widget.scrollController,
+          size: BoxConstraints(
+            minHeight: collapsedHeight,
+            maxHeight: expandedHeight,
+          ),
         ),
       );
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      forceMaterialTransparency: true,
-      collapsedHeight: collapsedHeight,
-      expandedHeight: expandedHeight,
-      pinned: true,
-      shape: _shape,
-      flexibleSpace: _flexibleSpace,
+    return Container(
+      // forceMaterialTransparency: true,
+      // collapsedHeight: collapsedHeight,
+      // expandedHeight: expandedHeight,
+      // pinned: true,
+      // shape: _shape,
+      child: _flexibleSpace,
     );
   }
 }

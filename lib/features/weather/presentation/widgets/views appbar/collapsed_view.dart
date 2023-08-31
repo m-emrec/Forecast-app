@@ -3,14 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/widgets/info_section.dart';
 
 import '../../../domain/entities/weather_entity.dart';
 import '../title_Section.dart';
 
 class CollapsedView extends StatefulWidget {
-  const CollapsedView({super.key});
-
+  const CollapsedView({super.key, required this.collapsedHeight});
+  final double collapsedHeight;
   @override
   State<CollapsedView> createState() => _CollapsedViewState();
 }
@@ -30,6 +31,7 @@ class _CollapsedViewState extends State<CollapsedView> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         AppBar(
           forceMaterialTransparency: true,
@@ -39,18 +41,21 @@ class _CollapsedViewState extends State<CollapsedView> {
           /// Down button
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Container(
-              padding: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2,
-                  color: const Color(0xFFF8F8F8).withOpacity(0.5),
+            child: GestureDetector(
+              onTap: () => sl<WeatherBloc>().add(ExpandedViewEvent()),
+              child: Container(
+                padding: EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: 2,
+                    color: const Color(0xFFF8F8F8).withOpacity(0.5),
+                  ),
                 ),
-              ),
-              child: const Icon(
-                Icons.keyboard_arrow_down_sharp,
-                size: 24,
+                child: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                  size: 24,
+                ),
               ),
             ),
           ),
@@ -70,7 +75,7 @@ class _CollapsedViewState extends State<CollapsedView> {
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
-                child: Image.asset("settings-button".toPng),
+                child: const Icon(Icons.settings_outlined),
               ),
             ),
           ],
@@ -98,6 +103,7 @@ class _CollapsedViewState extends State<CollapsedView> {
         32.ph,
         const Divider(),
         const CollapsedInfoSection(),
+        32.ph,
       ],
     );
   }

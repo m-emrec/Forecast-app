@@ -41,10 +41,11 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
           final bool _isCurrentTime =
               hourlyWeather.time.hour == DateTime.now().hour;
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
             child: AspectRatio(
               aspectRatio: 2 / 3,
               child: Container(
+                clipBehavior: Clip.none,
                 decoration: BoxDecoration(
                   color: _isCurrentTime ? null : Colors.transparent,
                   border: Border.all(
@@ -63,10 +64,9 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                       ? [
                           BoxShadow(
                             color: const Color(0xFF73B2EF).withOpacity(0.5),
-                            offset: const Offset(0, 2),
-                            spreadRadius: 4,
+                            offset: const Offset(0, 0),
+                            spreadRadius: 1,
                             blurRadius: 8,
-                            // blurStyle: BlurStyle.outer,
                           ),
                         ]
                       : null,

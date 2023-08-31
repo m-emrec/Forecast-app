@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather/core/extensions/context_extension.dart';
+import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 
 import '../../domain/entities/weather_entity.dart';
@@ -82,7 +83,7 @@ class _ExpandedInfoSectionState extends State<ExpandedInfoSection> {
                   width: 24,
                 ),
                 Text(
-                  _data.dayWeather?.first.chanceOfRain ?? "?",
+                  "%${_data.dayWeather?.first.chanceOfRain ?? "?"}",
                   style: context.textTheme.labelMedium,
                 ),
                 FittedBox(
@@ -96,6 +97,7 @@ class _ExpandedInfoSectionState extends State<ExpandedInfoSection> {
               ],
             ),
           ),
+          4.pw,
         ],
       ),
     );
@@ -180,7 +182,7 @@ class _CollapsedInfoSectionState extends State<CollapsedInfoSection> {
                   width: 24,
                 ),
                 Text(
-                  _data.dayWeather?[1].chanceOfRain ?? "?",
+                  "%${_data.dayWeather?[1].chanceOfRain ?? "?"}",
                   style: context.textTheme.labelMedium,
                 ),
                 FittedBox(

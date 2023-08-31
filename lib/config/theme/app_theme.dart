@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
@@ -6,6 +7,12 @@ class AppTheme {
     brightness: Brightness.light,
     textTheme: AppTextThemes.textTheme,
     scaffoldBackgroundColor: const Color(0xFF232D39),
+    appBarTheme: const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: Color(0xFF232D39),
+        statusBarColor: Colors.transparent,
+      ),
+    ),
     dividerTheme: const DividerThemeData(
       thickness: 3,
       color: Color(0xFF1E88F6),
