@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:weather/features/weather/presentation/widgets/view_manager.dart';
+import 'package:weather/features/weather/presentation/widgets/view%20managers/appbar_view_manager.dart';
 
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({

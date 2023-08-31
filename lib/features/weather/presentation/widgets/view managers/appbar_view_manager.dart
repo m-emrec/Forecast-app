@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather/core/constants/logger.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
-import 'package:weather/features/weather/presentation/widgets/views/collapsed_view.dart';
-import 'package:weather/features/weather/presentation/widgets/views/expanded_view.dart';
+import 'package:weather/features/weather/presentation/widgets/views%20appbar/collapsed_view.dart';
+import 'package:weather/features/weather/presentation/widgets/views%20appbar/expanded_view.dart';
 
 class ViewManager extends StatefulWidget {
   /// Manages the view . In default it returns [ExpandedView] if user scrolls the

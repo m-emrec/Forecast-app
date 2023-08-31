@@ -6,7 +6,7 @@ import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
 
-import '../../domain/entities/weather_entity.dart';
+import '../../../domain/entities/weather_entity.dart';
 
 class HourlyWeatherDataList extends StatefulWidget {
   final WeatherEntity data;

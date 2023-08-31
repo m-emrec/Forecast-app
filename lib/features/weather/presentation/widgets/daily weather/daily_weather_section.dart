@@ -6,7 +6,7 @@ import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
 
-import '../../domain/entities/weather_entity.dart';
+import '../../../domain/entities/weather_entity.dart';
 
 class DailyWeatherSection extends StatefulWidget {
   const DailyWeatherSection({super.key});

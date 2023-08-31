@@ -7,7 +7,7 @@ import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 
 import '../widgets/sliver_app_bar.dart';
-import '../widgets/weather_data_view_manager.dart';
+import '../widgets/view managers/weather_data_view_manager.dart';
 
 class LoadedDataView extends StatefulWidget {
   const LoadedDataView({super.key});
