@@ -4,22 +4,22 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static ThemeData theme = ThemeData(
-    brightness: Brightness.light,
-    textTheme: AppTextThemes.textTheme,
-    scaffoldBackgroundColor: const Color(0xFF232D39),
-    appBarTheme: const AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xFF232D39),
-        statusBarColor: Colors.transparent,
+      brightness: Brightness.light,
+      textTheme: AppTextThemes.textTheme,
+      scaffoldBackgroundColor: const Color(0xFF232D39),
+      appBarTheme: const AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFF232D39),
+          statusBarColor: Colors.transparent,
+        ),
       ),
-    ),
-    dividerTheme: const DividerThemeData(
-      thickness: 3,
-      color: Color(0xFF1E88F6),
-      indent: 32,
-      endIndent: 32,
-    ),
-  );
+      dividerTheme: const DividerThemeData(
+        thickness: 3,
+        color: Color(0xFF1E88F6),
+        indent: 32,
+        endIndent: 32,
+      ),
+      searchBarTheme: SearchBarThemeData());
 }
 
 class AppTextThemes {

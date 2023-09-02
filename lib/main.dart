@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/config/theme/app_theme.dart';
+import 'package:weather/features/search_location/presentation/pages/search_location_page.dart';
 import 'package:weather/injection_container.dart';
 
 import 'features/weather/presentation/pages/a.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       title: 'Flutter Demo',
-      home: const HomePage(),
+      home: const SearchLocationPage(),
     );
   }
 }
