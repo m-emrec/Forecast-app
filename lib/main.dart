@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/config/theme/app_theme.dart';
+import 'package:weather/core/resources/location_model.dart';
 import 'package:weather/injection_container.dart';
 
 import 'features/weather/presentation/pages/home.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
+  sl<LocationViewModel>().query = sl<SharedPreferences>().getString("query");
   // TODO: sl<LocationViewModel>().query = SharedPrefs;
   // TODO : Settings = SharedPrefs
   runApp(const MyApp());

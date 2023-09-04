@@ -35,7 +35,6 @@ class _ExpandedViewState extends State<ExpandedView> {
     super.initState();
   }
 
-  final a = ScrollPhysics();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherBloc, WeatherState>(

@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/resources/data_state.dart';
 import 'package:weather/core/resources/location_model.dart';
@@ -51,6 +52,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       String _coordinate;
       if (location.data!.isRight) {
         _coordinate = location.data!.right.query ?? "";
+        sl<SharedPreferences>().setString("query", _coordinate);
       } else {
         final double latitude = location.data!.left.latitude;
         final double longitude = location.data!.left.longitude;

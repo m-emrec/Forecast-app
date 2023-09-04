@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
@@ -16,9 +19,14 @@ class LoadingData extends StatefulWidget {
 class _LoadingDataState extends State<LoadingData> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Platform.isAndroid
+            ? const CircularProgressIndicator()
+            : const CupertinoActivityIndicator(
+                radius: 16,
+                color: Color(0xFF1E88F6),
+              ),
       ),
     );
   }

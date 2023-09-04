@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/resources/location_model.dart';
 import 'package:weather/features/search_location/data/repositories/location_repo_impl.dart';
 import 'package:weather/features/search_location/domain/repositories/location_repo.dart';
@@ -44,4 +45,7 @@ Future<void> initializeDependencies() async {
   /// Bloc
   sl.registerSingleton<SearchLocationBloc>(
       SearchLocationBloc(sl<GetPredictionsUseCase>()));
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  sl.registerSingleton<SharedPreferences>(prefs);
 }
