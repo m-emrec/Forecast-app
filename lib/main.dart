@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:weather/config/theme/app_theme.dart';
-import 'package:weather/features/search_location/presentation/pages/search_location_page.dart';
 import 'package:weather/injection_container.dart';
 
-import 'features/weather/presentation/pages/a.dart';
 import 'features/weather/presentation/pages/home.dart';
 
 void main() async {
   await initializeDependencies();
+  // TODO: sl<LocationViewModel>().query = SharedPrefs;
+  // TODO : Settings = SharedPrefs
   runApp(const MyApp());
 }
 

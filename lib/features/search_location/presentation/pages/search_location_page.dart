@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, no_leading_underscores_for_local_identifiers
+// ignore_for_file: public_member_api_docs, sort_constructors_first, no_leading_underscores_for_local_identifiers, unused_import
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:weather/core/constants/logger.dart';
-import 'package:weather/core/constants/strings.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/resources/location_model.dart';

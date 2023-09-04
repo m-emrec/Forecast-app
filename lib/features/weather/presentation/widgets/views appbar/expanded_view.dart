@@ -35,6 +35,7 @@ class _ExpandedViewState extends State<ExpandedView> {
     super.initState();
   }
 
+  final a = ScrollPhysics();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherBloc, WeatherState>(
@@ -42,73 +43,83 @@ class _ExpandedViewState extends State<ExpandedView> {
       builder: (context, state) {
         final double height = widget.expandedHeight;
         final double width = MediaQuery.of(context).size.width;
+
         return SizedBox(
           height: height,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                AppBar(
-                  forceMaterialTransparency: true,
-                  centerTitle: true,
+          child: RefreshIndicator.adaptive(
+            displacement: 100,
+            onRefresh: () {
+              return Future.delayed(
+                const Duration(seconds: 1),
+                () => _weatherBloc.add(WeatherFetchDataEvent()),
+              );
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AppBar(
+                    forceMaterialTransparency: true,
+                    centerTitle: true,
 
-                  /// Locations button
-                  leading: GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const SearchLocationPage(),
+                    /// Locations button
+                    leading: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const SearchLocationPage(),
+                        ),
                       ),
+                      child: Image.asset("menu-button".toPng),
                     ),
-                    child: Image.asset("menu-button".toPng),
-                  ),
 
-                  /// Title
-                  title: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.location_on_outlined),
-                      8.pw,
-                      Text(
-                        _data.currentWeather!.locationName!,
-                        style: context.textTheme.titleLarge,
+                    /// Title
+                    title: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.location_on_outlined),
+                        8.pw,
+                        Text(
+                          _data.currentWeather!.locationName!,
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+
+                    /// Settings button
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: GestureDetector(
+                          child: const Icon(Icons.settings_outlined),
+                        ),
                       ),
                     ],
                   ),
 
-                  /// Settings button
-                  actions: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: GestureDetector(
-                        child: const Icon(Icons.settings_outlined),
-                      ),
+                  /// Some spacing
+                  16.ph,
+
+                  /// Weather Image
+                  Image(
+                    height: height * 0.35,
+                    width: width * 0.5,
+                    image: AssetImage(
+                      _data.currentWeather!.condition!.getIcon.toPngDayIcon,
                     ),
-                  ],
-                ),
-
-                /// Some spacing
-                16.ph,
-
-                /// Weather Image
-                Image(
-                  height: height * 0.35,
-                  width: width * 0.5,
-                  image: AssetImage(
-                    _data.currentWeather!.condition!.getIcon.toPngDayIcon,
                   ),
-                ),
 
-                /// Title Section
-                const TitleSectionExpanded(),
-                16.ph,
-                const Divider(),
+                  /// Title Section
+                  const TitleSectionExpanded(),
+                  16.ph,
+                  const Divider(),
 
-                /// More Info Section
-                const ExpandedInfoSection(),
-                // 32.ph,
-              ],
+                  /// More Info Section
+                  const ExpandedInfoSection(),
+                  // 32.ph,
+                ],
+              ),
             ),
           ),
         );
