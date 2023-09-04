@@ -16,6 +16,8 @@ import 'package:weather/features/search_location/presentation/widgets/location_t
 import 'package:weather/features/weather/presentation/pages/home.dart';
 import 'package:weather/injection_container.dart';
 
+import '../widgets/locations_list.dart';
+
 class SearchLocationPage extends StatefulWidget {
   const SearchLocationPage({super.key});
 
@@ -25,6 +27,8 @@ class SearchLocationPage extends StatefulWidget {
 
 class _SearchLocationPageState extends State<SearchLocationPage> {
   ///
+  final TextEditingController _textEditingController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   late GetIt sl;
   late SearchLocationBloc _searchLocationBloc;
   @override
@@ -32,12 +36,17 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
     sl = GetIt.instance;
     _searchLocationBloc = sl<SearchLocationBloc>();
     _searchLocationBloc.add(SearchLocationInitialEvent());
+    _focusNode.requestFocus();
+
     super.initState();
   }
 
-  List b = ["Turkey", "America", "Germany"];
   @override
   Widget build(BuildContext context) {
+    /// Just to handle focus problem on some devices
+    if (MediaQuery.of(context).viewInsets == EdgeInsets.zero) {
+      _focusNode.unfocus();
+    }
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -50,25 +59,21 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
           preferredSize: const Size.fromHeight(50),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: BlocConsumer<SearchLocationBloc, SearchLocationState>(
-              bloc: _searchLocationBloc,
-              listener: (context, state) {},
-              builder: (context, state) {
-                return SearchBar(
-                  hintStyle:
-                      MaterialStatePropertyAll(context.textTheme.bodySmall),
-                  hintText: "Search Location...",
-                  leading: Icon(
-                    Icons.search,
-                    color: context.theme.scaffoldBackgroundColor,
-                  ),
-                  onChanged: (value) =>
-                      _searchLocationBloc.add(SearchEvent(value)),
-                  textStyle: MaterialStatePropertyAll(
-                    context.textTheme.labelLarge,
-                  ),
-                );
-              },
+
+            //*Search Bar
+            child: SearchBar(
+              onTap: () => _focusNode.requestFocus(),
+              focusNode: _focusNode..skipTraversal = false,
+              hintStyle: MaterialStatePropertyAll(context.textTheme.bodySmall),
+              hintText: "Search Location...",
+              leading: Icon(
+                Icons.search,
+                color: context.theme.scaffoldBackgroundColor,
+              ),
+              onChanged: (value) => _searchLocationBloc.add(SearchEvent(value)),
+              textStyle: MaterialStatePropertyAll(
+                context.textTheme.labelLarge,
+              ),
             ),
           ),
         ),
@@ -81,6 +86,7 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            /// Use Current Location Tile
             LocationTile(
               onTap: () {
                 sl<LocationViewModel>().query = null;
@@ -91,67 +97,14 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
                 );
               },
             ),
-            // const Divider(
-            //   endIndent: 0,
-            //   indent: 0,
-            //   color: Colors.white54,
-            // ),
+
+            /// Spacing
             16.ph,
+
+            /// List of location Predictions
             LocationsList(searchLocationBloc: _searchLocationBloc),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class LocationsList extends StatefulWidget {
-  final SearchLocationBloc searchLocationBloc;
-  const LocationsList({
-    Key? key,
-    required this.searchLocationBloc,
-  }) : super(key: key);
-
-  @override
-  State<LocationsList> createState() => _LocationsListState();
-}
-
-class _LocationsListState extends State<LocationsList> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: BlocConsumer<SearchLocationBloc, SearchLocationState>(
-        bloc: widget.searchLocationBloc,
-        listener: (context, state) {},
-        builder: (context, state) {
-          if (state is LoadedSuccessState) {
-            return ListView.builder(
-              itemCount: state.predictions.predictions!.length,
-              itemBuilder: (contex, index) {
-                final String _text =
-                    state.predictions.predictions![index]["description"];
-
-                return LocationTile(
-                  text: _text,
-                  onTap: () {
-                    sl<LocationViewModel>().query = _text;
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (_) => const HomePage(),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          }
-          if (state is LoadedFailState) {
-            return Center(
-              child: Text(state.exception),
-            );
-          }
-          return const SizedBox();
-        },
       ),
     );
   }

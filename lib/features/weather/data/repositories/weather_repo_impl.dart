@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:either_dart/either.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather/core/constants/logger.dart';
@@ -65,7 +67,6 @@ class WeatherRepoImpl implements WeatherRepo {
       // When we reach here, permissions are granted and we can
       // continue accessing the position of the device.
       Position _currentPos = await Geolocator.getCurrentPosition();
-      logger.i(_currentPos);
 
       return DataSuccess<Either<Position, LocationViewModel>>(
           Left<Position, LocationViewModel>(_currentPos));

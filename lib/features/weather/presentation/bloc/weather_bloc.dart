@@ -46,7 +46,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   FutureOr<void> onWeatherFetchDataEvent(
       WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
     emit(WeatherLoadingState());
-    logger.i(sl<LocationViewModel>().query);
     final location = await _getLocationUseCase.getLocation();
     if (location is DataSuccess) {
       String _coordinate;
