@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
   sl<LocationViewModel>().query = sl<SharedPreferences>().getString("query");
-  // TODO: sl<LocationViewModel>().query = SharedPrefs;
+
   // TODO : Settings = SharedPrefs
   runApp(const MyApp());
 }

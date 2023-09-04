@@ -56,6 +56,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       } else {
         final double latitude = location.data!.left.latitude;
         final double longitude = location.data!.left.longitude;
+        sl<SharedPreferences>().remove("query");
         _coordinate = "$latitude,$longitude";
       }
 
