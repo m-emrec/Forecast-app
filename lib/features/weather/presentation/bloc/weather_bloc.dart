@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 import 'dart:math';
 
@@ -5,6 +7,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/resources/data_state.dart';
+import 'package:weather/core/resources/location_model.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/domain/usecases/get_location_use_case.dart';
@@ -43,15 +46,20 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   FutureOr<void> onWeatherFetchDataEvent(
       WeatherFetchDataEvent event, Emitter<WeatherState> emit) async {
     emit(WeatherLoadingState());
+    logger.i(sl<LocationViewModel>().query);
     final location = await _getLocationUseCase.getLocation();
-
     if (location is DataSuccess) {
-      final double latitude = location.data!.latitude;
-      final double longitude = location.data!.longitude;
-      final String _coordinate = "$latitude,$longitude";
+      String _coordinate;
+      if (location.data!.isRight) {
+        _coordinate = location.data!.right.query ?? "";
+      } else {
+        final double latitude = location.data!.left.latitude;
+        final double longitude = location.data!.left.longitude;
+        _coordinate = "$latitude,$longitude";
+      }
+
       final dataState =
           await _getWeatherDataUseCase.getWeatherData(_coordinate);
-      logger.i(location.data);
 
       /// if data is loaded successfully emit LoadedSuccessStat
       if (dataState is DataSuccess) {
@@ -69,9 +77,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         logger.e(dataState.exception);
       }
     } else {
-      emit(
-        WeatherLoadedFailState(error: location.exception ?? " Unknown"),
-      );
+      // emit(
+      //   WeatherLoadedFailState(error: location.exception ?? " Unknown"),
+      // );
     }
   }
 }

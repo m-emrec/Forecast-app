@@ -35,13 +35,6 @@ class _LocationTileState extends State<LocationTile> {
           color: Colors.white70,
         ),
       ),
-      subtitle: Text(
-        "Secondary Text",
-        style: context.textTheme.labelSmall!.copyWith(
-          fontWeight: FontWeight.normal,
-          fontStyle: FontStyle.italic,
-        ),
-      ),
       contentPadding: const EdgeInsets.all(8.0),
       onTap: widget.onTap,
     );

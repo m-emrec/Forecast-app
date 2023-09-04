@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       title: 'Flutter Demo',
-      home: const SearchLocationPage(),
+      home: const HomePage(),
     );
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/features/weather/domain/entities/current_weather_entity.dart';
 
 class CurrentWeatherModel extends CurrentWeatherEntity {
@@ -31,7 +32,6 @@ class CurrentWeatherModel extends CurrentWeatherEntity {
 
   factory CurrentWeatherModel.fromJson(Map<String, dynamic> source) {
     final Map<String, dynamic> _location = source["location"];
-
     final String _name = _location["name"];
     final String _country = _location["country"];
     final String _region = _location["region"];

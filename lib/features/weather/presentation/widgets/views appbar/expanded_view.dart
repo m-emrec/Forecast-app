@@ -7,6 +7,7 @@ import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
+import 'package:weather/features/search_location/presentation/pages/search_location_page.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/presentation/widgets/location_selector_popup.dart';
 import 'package:weather/features/weather/presentation/widgets/title_Section.dart';
@@ -55,9 +56,10 @@ class _ExpandedViewState extends State<ExpandedView> {
 
                   /// Locations button
                   leading: GestureDetector(
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (_) => const LocationSelector(),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const SearchLocationPage(),
+                      ),
                     ),
                     child: Image.asset("menu-button".toPng),
                   ),
