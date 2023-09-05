@@ -8,6 +8,7 @@ import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/search_location/presentation/pages/search_location_page.dart';
+import 'package:weather/features/settings/presentation/pages/settings_page.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
 import 'package:weather/features/weather/presentation/widgets/location_selector_popup.dart';
 import 'package:weather/features/weather/presentation/widgets/title_Section.dart';
@@ -91,6 +92,11 @@ class _ExpandedViewState extends State<ExpandedView> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const SettingsPage(),
+                            ),
+                          ),
                           child: const Icon(Icons.settings_outlined),
                         ),
                       ),

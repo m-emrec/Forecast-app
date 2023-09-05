@@ -6,6 +6,7 @@ import 'package:weather/core/extensions/weather_icon_manager.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/widgets/info_section.dart';
 
+import '../../../../settings/presentation/pages/settings_page.dart';
 import '../../../domain/entities/weather_entity.dart';
 import '../title_Section.dart';
 
@@ -75,6 +76,11 @@ class _CollapsedViewState extends State<CollapsedView> {
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SettingsPage(),
+                  ),
+                ),
                 child: const Icon(Icons.settings_outlined),
               ),
             ),

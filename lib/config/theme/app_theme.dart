@@ -16,6 +16,11 @@ class AppTheme {
       ),
     ),
 
+    /// Card
+    cardTheme: CardTheme(
+      color: const Color(0xFF232D39).withOpacity(0),
+    ),
+
     /// divider
     dividerTheme: const DividerThemeData(
       thickness: 3,
