@@ -5,6 +5,8 @@ import 'package:weather/features/search_location/data/repositories/location_repo
 import 'package:weather/features/search_location/domain/repositories/location_repo.dart';
 import 'package:weather/features/search_location/domain/usecases/get_predictions_use_case.dart';
 import 'package:weather/features/search_location/presentation/bloc/search_location_bloc.dart';
+import 'package:weather/features/settings/data/repositories/settings_repo_impl.dart';
+import 'package:weather/features/settings/domain/repositories/settings_repo.dart';
 import 'package:weather/features/weather/data/datasources/remote/weather_api_service.dart';
 import 'package:weather/features/weather/data/repositories/weather_repo_impl.dart';
 import 'package:weather/features/weather/domain/repositories/weather_repo.dart';
@@ -48,4 +50,6 @@ Future<void> initializeDependencies() async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(prefs);
+
+  sl.registerSingleton<SettingsRepo>(SettingsRepoImpl());
 }
