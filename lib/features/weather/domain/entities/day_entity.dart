@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 import 'package:weather/features/weather/domain/entities/hour_entity.dart';
 
 class DayEntity {
@@ -15,6 +13,8 @@ class DayEntity {
   final String minTemp_f;
   final String avgTemp_c;
   final String avgTemp_f;
+  final String wind_kph;
+  final String wind_mph;
   final String avgHumidity;
   final bool isRainy;
   final String chanceOfRain;
@@ -31,6 +31,8 @@ class DayEntity {
     required this.minTemp_c,
     required this.minTemp_f,
     required this.avgTemp_c,
+    required this.wind_kph,
+    required this.wind_mph,
     required this.avgTemp_f,
     required this.avgHumidity,
     required this.isRainy,
@@ -75,6 +77,8 @@ class DayEntity {
       minTemp_f: map['minTemp_f'] as String,
       avgTemp_c: map['avgTemp_c'] as String,
       avgTemp_f: map['avgTemp_f'] as String,
+      wind_kph: map['wind_kph'] as String,
+      wind_mph: map['wind_mph'] as String,
       avgHumidity: map['avgHumidity'] as String,
       isRainy: map['isRainy'] as bool,
       chanceOfRain: map['chanceOfRain'] as String,

@@ -26,18 +26,22 @@ class _LoadedDataViewState extends State<LoadedDataView> {
     super.initState();
   }
 
-  void viewManagerFunc(DragEndDetails details) {
+  void viewManagerFunc(DragEndDetails details) async {
     final double _velocity = details.velocity.pixelsPerSecond.dy;
+    final _oldState = _weatherBloc.state;
+    final bool _isUp = _velocity.sign < 0;
 
     /// Drag Up [CollapsedView]
-    if (_velocity.sign < 0) {
+    if (_isUp && _oldState is ExpandedViewState) {
       _weatherBloc.add(CollapsedViewEvent());
     }
 
     /// Drag Down [ExpandedView]
-    if (_velocity.sign > 0) {
+    if (!_isUp && _oldState is CollapsedViewState) {
       _weatherBloc.add(ExpandedViewEvent());
     }
+
+    // logger.i(_weatherBloc.state);
   }
 
   @override

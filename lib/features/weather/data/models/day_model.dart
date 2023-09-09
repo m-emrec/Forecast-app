@@ -16,6 +16,8 @@ class DayModel extends DayEntity {
     required String minTemp_f,
     required String avgTemp_c,
     required String avgTemp_f,
+    required String wind_kph,
+    required String wind_mph,
     required String avgHumidity,
     required bool isRainy,
     required String chanceOfRain,
@@ -39,13 +41,14 @@ class DayModel extends DayEntity {
           minTemp_c: minTemp_c,
           minTemp_f: minTemp_f,
           uv: uv,
+          wind_kph: wind_kph,
+          wind_mph: wind_mph,
         );
 
   factory DayModel.fromJson(data) {
-    // logger.i(data);
-    final forecast = data;
+    // logger.i(data["wind_kph"]);
     // logger.i(forecast);
-    final forecastday = forecast;
+    final forecastday = data;
     // logger.d(forecastday);
     final DateTime date = DateTime.fromMillisecondsSinceEpoch(
         int.parse("${forecastday["date_epoch"]}000"));
@@ -53,7 +56,6 @@ class DayModel extends DayEntity {
     ///int.parse("${data["time_epoch"]}000")
     final day = forecastday["day"];
     final hour = forecastday["hour"];
-    // logger.i(hour);
 
     return DayModel(
       hourlyWeather: hour
@@ -68,6 +70,8 @@ class DayModel extends DayEntity {
       minTemp_f: day["mintemp_f"].toString(),
       avgTemp_c: day["avgtemp_c"].toString(),
       avgTemp_f: day["avgtemp_f"].toString(),
+      wind_kph: day["maxwind_kph"].toString(),
+      wind_mph: day["maxwind_mph"].toString(),
       avgHumidity: day["avghumidity"].toString(),
       isRainy: day["daily_will_it_rain"] == "1" ? true : false,
       chanceOfRain: day["daily_chance_of_rain"].toString(),

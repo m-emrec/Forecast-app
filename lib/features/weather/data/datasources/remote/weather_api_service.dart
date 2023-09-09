@@ -36,7 +36,7 @@ class WeatherApiService {
 
     final json = jsonDecode(response.body);
     final dayList = json["forecast"]["forecastday"];
-
+    // logger.i(dayList);
     final result = WeatherModel(
       currentWeather: CurrentWeatherModel.fromJson(
         json,

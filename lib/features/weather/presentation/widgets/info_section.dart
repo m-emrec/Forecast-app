@@ -152,8 +152,8 @@ class _CollapsedInfoSectionState extends State<CollapsedInfoSection> {
                 Image.asset("wind-icon".toPng),
                 Text(
                   _prefs.getString("windUnit") == "kph"
-                      ? "${_data.currentWeather!.wind_kph!} km/H"
-                      : "${_data.currentWeather!.wind_mph!} m/H",
+                      ? "${_data.dayWeather![0].wind_kph!} km/H"
+                      : "${_data.dayWeather![0].wind_mph!} m/H",
                   style: context.textTheme.labelMedium,
                 ),
                 Text(

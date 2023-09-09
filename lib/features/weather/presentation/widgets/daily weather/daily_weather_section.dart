@@ -72,7 +72,7 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
 
                 /// Deggree
                 trailing: Text(
-                  _prefs.getString("tempUnit") == "celcius"
+                  _prefs.getString("tempUnit") == "Celcius"
                       ? "${day.avgTemp_c}°"
                       : "${day.avgTemp_f}°",
                   style: context.textTheme.labelMedium,
