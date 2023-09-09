@@ -84,6 +84,12 @@ Future<void> initializeDependencies() async {
     ),
   );
 
-  sl.registerSingletonAsync<LocationPermission>(
-      () async => await Geolocator.checkPermission());
+  sl.registerSingletonAsync<bool>(() async {
+    LocationPermission _permission = await Geolocator.checkPermission();
+    if (_permission == LocationPermission.always ||
+        _permission == LocationPermission.whileInUse) {
+      return true;
+    }
+    return false;
+  });
 }

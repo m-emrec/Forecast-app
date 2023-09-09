@@ -99,21 +99,21 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   32.ph,
                   //* Permissions
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Permissions"),
-                      4.ph,
-                      SettingsSwitchCard(
-                        title: "Location",
-                        icon: Icons.location_on_outlined,
-                        value: state.settings.allowLocation!,
-                        onChanged: (bool newVal) => _settingsBloc.add(
-                          ChangeLocationSettingsEvent(newVal),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text("Permissions"),
+                  //     4.ph,
+                  //     SettingsSwitchCard(
+                  //       title: "Location",
+                  //       icon: Icons.location_on_outlined,
+                  //       value: state.settings.allowLocation!,
+                  //       onChanged: (bool newVal) => _settingsBloc.add(
+                  //         ChangeLocationSettingsEvent(newVal),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               );
             }

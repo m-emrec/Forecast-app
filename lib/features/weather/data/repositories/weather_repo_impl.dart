@@ -26,7 +26,7 @@ class WeatherRepoImpl implements WeatherRepo {
   Future<DataState<Either<Position, LocationViewModel>>> getLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
-
+    bool switchPermission;
     if (sl<LocationViewModel>().query != null) {
       return DataSuccess<Either<Position, LocationViewModel>>(
         Right<Position, LocationViewModel>(sl<LocationViewModel>()),
@@ -36,7 +36,14 @@ class WeatherRepoImpl implements WeatherRepo {
     try {
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      switchPermission = sl<bool>();
+      logger.d("switch ->" + switchPermission.toString());
+      if (!switchPermission) {
+        logger.d("Switch is false");
 
+        return DataFailed(
+            'Please open the location access'); //Future.error('Location permissions are denied');
+      }
       if (!serviceEnabled) {
         // Location services are not enabled don't continue
         // accessing the position and request users of the
@@ -45,12 +52,11 @@ class WeatherRepoImpl implements WeatherRepo {
             'Location services are disabled.'); // Future.error('Location services are disabled.');
       }
 
-      permission = sl<LocationPermission>();
+      permission = await Geolocator.checkPermission();
       logger.i("Location Permission -> $permission");
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
-        sl.registerSingletonAsync<LocationPermission>(
-            () async => await Geolocator.requestPermission());
+
         if (permission == LocationPermission.denied) {
           // Permissions are denied, next time you could try
           // requesting permissions again (this is also where
@@ -72,6 +78,7 @@ class WeatherRepoImpl implements WeatherRepo {
       // continue accessing the position of the device.
       Position _currentPos = await Geolocator.getCurrentPosition();
       logger.d(permission);
+      sl.registerSingletonAsync<bool>(() async => true);
       return DataSuccess<Either<Position, LocationViewModel>>(
           Left<Position, LocationViewModel>(_currentPos));
     } catch (e) {

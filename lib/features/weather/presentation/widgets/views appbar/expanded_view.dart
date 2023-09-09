@@ -55,7 +55,7 @@ class _ExpandedViewState extends State<ExpandedView> {
               );
             },
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              // physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
