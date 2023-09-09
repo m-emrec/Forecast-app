@@ -49,7 +49,6 @@ class SettingsRepoImpl implements SettingsRepo {
       await _prefs.setBool("allowNotification", newSettings.allowNotification!);
       await _prefs.setString("tempUnit", newSettings.temperatureUnit!);
       await _prefs.setString("windUnit", newSettings.windSpeedUnit!);
-      // sl<SettingsEntitiy>() = SettingsEntitiy();
       return DataSuccess(null);
     } catch (e) {
       return DataFailed(e);

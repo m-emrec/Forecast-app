@@ -81,7 +81,7 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                   children: [
                     /// Deggree
                     Text(
-                      _prefs.getString("tempUnit") == "celicus"
+                      _prefs.getString("tempUnit") == "Celcius"
                           ? "${hourlyWeather.temp_c}°"
                           : "${hourlyWeather.temp_f}",
                       style: context.textTheme.bodySmall!.copyWith(

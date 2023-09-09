@@ -45,7 +45,8 @@ class WeatherRepoImpl implements WeatherRepo {
             'Location services are disabled.'); // Future.error('Location services are disabled.');
       }
 
-      permission = await Geolocator.checkPermission();
+      permission = sl<LocationPermission>();
+
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
 
