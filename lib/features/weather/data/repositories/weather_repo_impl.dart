@@ -46,10 +46,11 @@ class WeatherRepoImpl implements WeatherRepo {
       }
 
       permission = sl<LocationPermission>();
-
+      logger.i("Location Permission -> $permission");
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
-
+        sl.registerSingletonAsync<LocationPermission>(
+            () async => await Geolocator.requestPermission());
         if (permission == LocationPermission.denied) {
           // Permissions are denied, next time you could try
           // requesting permissions again (this is also where
@@ -70,7 +71,7 @@ class WeatherRepoImpl implements WeatherRepo {
       // When we reach here, permissions are granted and we can
       // continue accessing the position of the device.
       Position _currentPos = await Geolocator.getCurrentPosition();
-
+      logger.d(permission);
       return DataSuccess<Either<Position, LocationViewModel>>(
           Left<Position, LocationViewModel>(_currentPos));
     } catch (e) {

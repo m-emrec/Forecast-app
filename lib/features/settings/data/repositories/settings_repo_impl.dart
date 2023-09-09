@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/resources/data_state.dart';
 import 'package:weather/features/settings/data/models/settings_model.dart';
@@ -17,6 +18,10 @@ class SettingsRepoImpl implements SettingsRepo {
         temperatureUnit: newSettings.temperatureUnit,
         windSpeedUnit: newSettings.windSpeedUnit,
       );
+
+      sl.registerSingletonAsync<LocationPermission>(
+          () async => LocationPermission.denied);
+
       return DataSuccess(_newSettings);
     } catch (e) {
       return DataFailed(e);
@@ -29,7 +34,11 @@ class SettingsRepoImpl implements SettingsRepo {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
 
       final SettingsModel _settings = SettingsModel(
-        allowLocation: _prefs.getBool("allowLocation") ?? false,
+        allowLocation:
+            sl<LocationPermission>() == LocationPermission.whileInUse ||
+                    sl<LocationPermission>() == LocationPermission.always
+                ? true
+                : false, //_prefs.getBool("allowLocation") ?? false,
         allowNotification: _prefs.getBool("allowNotification") ?? false,
         temperatureUnit: _prefs.getString("tempUnit") ?? "celcius",
         windSpeedUnit: _prefs.getString("windUnit") ?? "kph",
@@ -45,7 +54,13 @@ class SettingsRepoImpl implements SettingsRepo {
   Future<DataState<void>> saveSettings(SettingsEntitiy newSettings) async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      await _prefs.setBool("allowLocation", newSettings.allowLocation!);
+      await _prefs.setBool(
+        "allowLocation",
+        sl<LocationPermission>() == LocationPermission.whileInUse ||
+                sl<LocationPermission>() == LocationPermission.always
+            ? true
+            : false,
+      );
       await _prefs.setBool("allowNotification", newSettings.allowNotification!);
       await _prefs.setString("tempUnit", newSettings.temperatureUnit!);
       await _prefs.setString("windUnit", newSettings.windSpeedUnit!);
