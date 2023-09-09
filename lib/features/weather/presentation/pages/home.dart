@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final a = ModalRoute.of(context)!.settings.arguments;
+    // logger.i(a);
     return BlocConsumer<WeatherBloc, WeatherState>(
       bloc: sl<WeatherBloc>(),
       listener: (context, state) {},

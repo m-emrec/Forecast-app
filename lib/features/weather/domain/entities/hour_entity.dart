@@ -1,14 +1,19 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class HourEntity {
   final DateTime time;
-  final String temp;
+  final String temp_c;
+  final String temp_f;
   final bool isDay;
   final String condition;
-  final String wind;
+  final String wind_kph;
+  final String wind_mph;
   final String humidity;
-  final String feelsLike;
+  final String feelsLike_c;
+  final String feelsLike_f;
   final bool isRainy;
   final String chanceOfRain;
   final bool isSnowy;
@@ -16,12 +21,15 @@ class HourEntity {
   final String uv;
   HourEntity({
     required this.time,
-    required this.temp,
+    required this.temp_c,
+    required this.temp_f,
     required this.isDay,
     required this.condition,
-    required this.wind,
+    required this.wind_kph,
+    required this.wind_mph,
     required this.humidity,
-    required this.feelsLike,
+    required this.feelsLike_c,
+    required this.feelsLike_f,
     required this.isRainy,
     required this.chanceOfRain,
     required this.isSnowy,
@@ -45,12 +53,15 @@ class HourEntity {
   }) {
     return HourEntity(
       time: time ?? this.time,
-      temp: temp ?? this.temp,
+      temp_c: temp_c ?? this.temp_c,
+      temp_f: temp_f ?? this.temp_f,
       isDay: isDay ?? this.isDay,
       condition: condition ?? this.condition,
-      wind: wind ?? this.wind,
+      wind_kph: wind_kph ?? this.wind_kph,
+      wind_mph: wind_mph ?? this.wind_mph,
       humidity: humidity ?? this.humidity,
-      feelsLike: feelsLike ?? this.feelsLike,
+      feelsLike_c: feelsLike_c ?? this.feelsLike_c,
+      feelsLike_f: feelsLike_f ?? this.feelsLike_f,
       isRainy: isRainy == "1" ? true : false,
       chanceOfRain: chanceOfRain ?? this.chanceOfRain,
       isSnowy: isSnowy == "1" ? true : false,
@@ -62,12 +73,15 @@ class HourEntity {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'time': time.millisecondsSinceEpoch,
-      'temp': temp,
+      'temp_c': temp_c,
+      'temp_f': temp_f,
       'isDay': isDay,
       'condition': condition,
-      'wind': wind,
+      'wind_kph': wind_kph,
+      'wind_mph': wind_mph,
       'humidity': humidity,
-      'feelsLike': feelsLike,
+      'feelsLike_c': feelsLike_c,
+      'feelsLike_f': feelsLike_f,
       'isRainy': isRainy,
       'chanceOfRain': chanceOfRain,
       'isSnowy': isSnowy,
@@ -79,12 +93,15 @@ class HourEntity {
   factory HourEntity.fromMap(Map<String, dynamic> map) {
     return HourEntity(
       time: DateTime.fromMillisecondsSinceEpoch(map['time'] as int),
-      temp: map['temp'] as String,
+      temp_c: map['temp_c'] as String,
+      temp_f: map['temp_f'] as String,
       isDay: map['isDay'] as bool,
       condition: map['condition'] as String,
-      wind: map['wind'] as String,
+      wind_kph: map['wind_kph'] as String,
+      wind_mph: map['wind_mph'] as String,
       humidity: map['humidity'] as String,
-      feelsLike: map['feelsLike'] as String,
+      feelsLike_c: map['feelsLike_c'] as String,
+      feelsLike_f: map['feelsLike_f'] as String,
       isRainy: map['isRainy'].toString() == "1" ? true : false,
       chanceOfRain: map['chanceOfRain'] as String,
       isSnowy: map['isSnowy'].toString() == "1" ? true : false,
@@ -97,48 +114,9 @@ class HourEntity {
 
   factory HourEntity.fromJson(String source) =>
       HourEntity.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'HourEntity(time: $time, temp: $temp, isDay: $isDay, condition: $condition, wind: $wind, humidity: $humidity, feelsLike: $feelsLike, isRainy: $isRainy, chanceOfRain: $chanceOfRain, isSnowy: $isSnowy, chanceOfSnow: $chanceOfSnow, uv: $uv)';
-  }
-
-  @override
-  bool operator ==(covariant HourEntity other) {
-    if (identical(this, other)) return true;
-
-    return other.time == time &&
-        other.temp == temp &&
-        other.isDay == isDay &&
-        other.condition == condition &&
-        other.wind == wind &&
-        other.humidity == humidity &&
-        other.feelsLike == feelsLike &&
-        other.isRainy == isRainy &&
-        other.chanceOfRain == chanceOfRain &&
-        other.isSnowy == isSnowy &&
-        other.chanceOfSnow == chanceOfSnow &&
-        other.uv == uv;
-  }
-
-  @override
-  int get hashCode {
-    return time.hashCode ^
-        temp.hashCode ^
-        isDay.hashCode ^
-        condition.hashCode ^
-        wind.hashCode ^
-        humidity.hashCode ^
-        feelsLike.hashCode ^
-        isRainy.hashCode ^
-        chanceOfRain.hashCode ^
-        isSnowy.hashCode ^
-        chanceOfSnow.hashCode ^
-        uv.hashCode;
-  }
 }
 
-// "hour": [
+// "hour": [s
 //                     {
 //                         "time_epoch": 1692486000,
 //                         "time": "2023-08-20 00:00",

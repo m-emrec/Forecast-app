@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -9,9 +9,12 @@ class DayEntity {
   final List<HourEntity> hourlyWeather;
 
   final DateTime date;
-  final String maxTemp;
-  final String minTemp;
-  final String avgTemp;
+  final String maxTemp_c;
+  final String maxTemp_f;
+  final String minTemp_c;
+  final String minTemp_f;
+  final String avgTemp_c;
+  final String avgTemp_f;
   final String avgHumidity;
   final bool isRainy;
   final String chanceOfRain;
@@ -23,9 +26,12 @@ class DayEntity {
   DayEntity({
     required this.hourlyWeather,
     required this.date,
-    required this.maxTemp,
-    required this.minTemp,
-    required this.avgTemp,
+    required this.maxTemp_c,
+    required this.maxTemp_f,
+    required this.minTemp_c,
+    required this.minTemp_f,
+    required this.avgTemp_c,
+    required this.avgTemp_f,
     required this.avgHumidity,
     required this.isRainy,
     required this.chanceOfRain,
@@ -35,43 +41,16 @@ class DayEntity {
     required this.uv,
   });
 
-  DayEntity copyWith({
-    List<HourEntity>? hourlyWeather,
-    DateTime? date,
-    String? maxTemp,
-    String? minTemp,
-    String? avgTemp,
-    String? avgHumidity,
-    bool? isRainy,
-    String? chanceOfRain,
-    bool? isSnowy,
-    String? chanceOfSnow,
-    String? condition,
-    String? uv,
-  }) {
-    return DayEntity(
-      hourlyWeather: hourlyWeather ?? this.hourlyWeather,
-      date: date ?? this.date,
-      maxTemp: maxTemp ?? this.maxTemp,
-      minTemp: minTemp ?? this.minTemp,
-      avgTemp: avgTemp ?? this.avgTemp,
-      avgHumidity: avgHumidity ?? this.avgHumidity,
-      isRainy: isRainy ?? this.isRainy,
-      chanceOfRain: chanceOfRain ?? this.chanceOfRain,
-      isSnowy: isSnowy ?? this.isSnowy,
-      chanceOfSnow: chanceOfSnow ?? this.chanceOfSnow,
-      condition: condition ?? this.condition,
-      uv: uv ?? this.uv,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'hourlyWeather': hourlyWeather.map((x) => x.toMap()).toList(),
       'date': date.millisecondsSinceEpoch,
-      'maxTemp': maxTemp,
-      'minTemp': minTemp,
-      'avgTemp': avgTemp,
+      'maxTemp_c': maxTemp_c,
+      'maxTemp_f': maxTemp_f,
+      'minTemp_c': minTemp_c,
+      'minTemp_f': minTemp_f,
+      'avgTemp_c': avgTemp_c,
+      'avgTemp_f': avgTemp_f,
       'avgHumidity': avgHumidity,
       'isRainy': isRainy,
       'chanceOfRain': chanceOfRain,
@@ -90,9 +69,12 @@ class DayEntity {
         ),
       ),
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
-      maxTemp: map['maxTemp'] as String,
-      minTemp: map['minTemp'] as String,
-      avgTemp: map['avgTemp'] as String,
+      maxTemp_c: map['maxTemp_c'] as String,
+      maxTemp_f: map['maxTemp_f'] as String,
+      minTemp_c: map['minTemp_c'] as String,
+      minTemp_f: map['minTemp_f'] as String,
+      avgTemp_c: map['avgTemp_c'] as String,
+      avgTemp_f: map['avgTemp_f'] as String,
       avgHumidity: map['avgHumidity'] as String,
       isRainy: map['isRainy'] as bool,
       chanceOfRain: map['chanceOfRain'] as String,

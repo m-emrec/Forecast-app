@@ -5,6 +5,7 @@ import 'package:weather/core/resources/data_state.dart';
 import 'package:weather/features/settings/data/models/settings_model.dart';
 import 'package:weather/features/settings/domain/entities/settings_entity.dart';
 import 'package:weather/features/settings/domain/repositories/settings_repo.dart';
+import 'package:weather/injection_container.dart';
 
 class SettingsRepoImpl implements SettingsRepo {
   @override
@@ -28,11 +29,12 @@ class SettingsRepoImpl implements SettingsRepo {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
 
       final SettingsModel _settings = SettingsModel(
-        allowLocation: _prefs.getBool("allowLocation"),
-        allowNotification: _prefs.getBool("allowNotification"),
-        temperatureUnit: _prefs.getString("tempUnit"),
-        windSpeedUnit: _prefs.getString("windUnit"),
+        allowLocation: _prefs.getBool("allowLocation") ?? false,
+        allowNotification: _prefs.getBool("allowNotification") ?? false,
+        temperatureUnit: _prefs.getString("tempUnit") ?? "celcius",
+        windSpeedUnit: _prefs.getString("windUnit") ?? "kph",
       );
+
       return DataSuccess(_settings);
     } catch (e) {
       return DataFailed(e);
@@ -43,10 +45,11 @@ class SettingsRepoImpl implements SettingsRepo {
   Future<DataState<void>> saveSettings(SettingsEntitiy newSettings) async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setBool("allowLocation", newSettings.allowLocation!);
-      _prefs.setBool("allowNotification", newSettings.allowNotification!);
-      _prefs.setString("tempUnit", newSettings.temperatureUnit!);
-      _prefs.setString("windUnit", newSettings.windSpeedUnit!);
+      await _prefs.setBool("allowLocation", newSettings.allowLocation!);
+      await _prefs.setBool("allowNotification", newSettings.allowNotification!);
+      await _prefs.setString("tempUnit", newSettings.temperatureUnit!);
+      await _prefs.setString("windUnit", newSettings.windSpeedUnit!);
+      // sl<SettingsEntitiy>() = SettingsEntitiy();
       return DataSuccess(null);
     } catch (e) {
       return DataFailed(e);

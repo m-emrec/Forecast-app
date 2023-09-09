@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
 
+import '../../../../../injection_container.dart';
 import '../../../domain/entities/weather_entity.dart';
 
 class HourlyWeatherDataList extends StatefulWidget {
@@ -21,8 +23,10 @@ class HourlyWeatherDataList extends StatefulWidget {
 
 class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
   @override
   void initState() {
+    _prefs = sl<SharedPreferences>();
     _data = widget.data;
     super.initState();
   }
@@ -77,7 +81,9 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                   children: [
                     /// Deggree
                     Text(
-                      "${hourlyWeather.temp}°",
+                      _prefs.getString("tempUnit") == "celicus"
+                          ? "${hourlyWeather.temp_c}°"
+                          : "${hourlyWeather.temp_f}",
                       style: context.textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

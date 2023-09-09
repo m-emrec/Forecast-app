@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:weather/core/constants/logger.dart';
@@ -8,9 +10,12 @@ class DayModel extends DayEntity {
   DayModel({
     required List<HourModel> hourlyWeather,
     required DateTime date,
-    required String maxTemp,
-    required String minTemp,
-    required String avgTemp,
+    required String maxTemp_c,
+    required String maxTemp_f,
+    required String minTemp_c,
+    required String minTemp_f,
+    required String avgTemp_c,
+    required String avgTemp_f,
     required String avgHumidity,
     required bool isRainy,
     required String chanceOfRain,
@@ -20,7 +25,8 @@ class DayModel extends DayEntity {
     required String uv,
   }) : super(
           avgHumidity: avgHumidity,
-          avgTemp: avgTemp,
+          avgTemp_c: avgTemp_c,
+          avgTemp_f: avgTemp_f,
           chanceOfRain: chanceOfRain,
           chanceOfSnow: chanceOfSnow,
           condition: condition,
@@ -28,8 +34,10 @@ class DayModel extends DayEntity {
           hourlyWeather: hourlyWeather,
           isRainy: isRainy,
           isSnowy: isSnowy,
-          maxTemp: maxTemp,
-          minTemp: minTemp,
+          maxTemp_c: maxTemp_c,
+          maxTemp_f: maxTemp_f,
+          minTemp_c: minTemp_c,
+          minTemp_f: minTemp_f,
           uv: uv,
         );
 
@@ -54,9 +62,12 @@ class DayModel extends DayEntity {
           )
           .toList(),
       date: date,
-      maxTemp: day["maxtemp_c"].toString(),
-      minTemp: day["mintemp_c"].toString(),
-      avgTemp: day["avgtemp_c"].toString(),
+      maxTemp_c: day["maxtemp_c"].toString(),
+      maxTemp_f: day["maxtemp_f"].toString(),
+      minTemp_c: day["mintemp_c"].toString(),
+      minTemp_f: day["mintemp_f"].toString(),
+      avgTemp_c: day["avgtemp_c"].toString(),
+      avgTemp_f: day["avgtemp_f"].toString(),
       avgHumidity: day["avghumidity"].toString(),
       isRainy: day["daily_will_it_rain"] == "1" ? true : false,
       chanceOfRain: day["daily_chance_of_rain"].toString(),

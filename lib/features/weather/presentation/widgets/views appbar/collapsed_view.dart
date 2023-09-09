@@ -71,20 +71,20 @@ class _CollapsedViewState extends State<CollapsedView> {
             ],
           ),
 
-          /// Setting Button
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const SettingsPage(),
-                  ),
-                ),
-                child: const Icon(Icons.settings_outlined),
-              ),
-            ),
-          ],
+          // /// Setting Button
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 8.0),
+          //     child: GestureDetector(
+          //       onTap: () => Navigator.of(context).push(
+          //         MaterialPageRoute(
+          //           builder: (_) => const SettingsPage(),
+          //         ),
+          //       ),
+          //       child: const Icon(Icons.settings_outlined),
+          //     ),
+          //   ),
+          // ],
         ),
 
         /// some spacing

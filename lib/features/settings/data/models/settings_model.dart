@@ -2,10 +2,10 @@ import 'package:weather/features/settings/domain/entities/settings_entity.dart';
 
 class SettingsModel extends SettingsEntitiy {
   SettingsModel({
-    temperatureUnit,
-    windSpeedUnit,
-    allowLocation,
-    allowNotification,
+    temperatureUnit = "Celcius",
+    windSpeedUnit = "kph",
+    allowLocation = false,
+    allowNotification = false,
   }) : super(
           allowLocation: allowLocation,
           allowNotification: allowNotification,

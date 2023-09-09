@@ -1,13 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 class CurrentWeatherEntity {
   final DateTime? lastUpdated;
-  final String? temp;
+  final String? temp_c;
+  final String? temp_f;
   final bool? isDay;
   final String? condition;
-  final String? wind;
+  final String? wind_kph;
+  final String? wind_mph;
   final String? humidity;
   final String? uv;
-  final String? feelsLike;
+  final String? feelsLike_c;
+  final String? feelsLike_f;
 
   final String? locationName;
   final String? country;
@@ -15,13 +18,16 @@ class CurrentWeatherEntity {
 
   CurrentWeatherEntity({
     this.lastUpdated,
-    this.temp,
+    this.temp_c,
+    this.temp_f,
     this.isDay,
     this.condition,
-    this.wind,
+    this.wind_kph,
+    this.wind_mph,
     this.humidity,
     this.uv,
-    this.feelsLike,
+    this.feelsLike_c,
+    this.feelsLike_f,
     this.locationName,
     this.country,
     this.region,

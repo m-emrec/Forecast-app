@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/features/weather/domain/entities/weather_entity.dart';
@@ -15,10 +17,14 @@ class TitleSectionExpanded extends StatefulWidget {
 class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
   late GetIt sl;
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
+  late bool isCelcius;
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
+    _prefs = sl<SharedPreferences>();
+    isCelcius = _prefs.getString("tempUnit") == "Celcius";
     super.initState();
   }
 
@@ -30,13 +36,15 @@ class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
         Text.rich(
           TextSpan(
             /// degree
-            text: _data.currentWeather!.temp!,
+            text: isCelcius
+                ? _data.currentWeather!.temp_c!
+                : _data.currentWeather!.temp_f!,
             style: context.textTheme.bodyLarge,
-            children: const [
+            children: [
               /// ℃ symbole
               TextSpan(
-                text: "℃",
-                style: TextStyle(fontSize: 24),
+                text: isCelcius ? "℃" : "°F",
+                style: const TextStyle(fontSize: 24),
               ),
             ],
           ),
@@ -73,10 +81,14 @@ class TitleSectionCollapsed extends StatefulWidget {
 class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
   late GetIt sl;
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
+  late bool isCelcius;
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
+    _prefs = sl<SharedPreferences>();
+    isCelcius = _prefs.getString("tempUnit") == "Celcius";
     super.initState();
   }
 
@@ -92,12 +104,14 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
         Text.rich(
           /// Tomorrows temp
           TextSpan(
-            text: _data.dayWeather![1].avgTemp,
+            text: isCelcius
+                ? _data.dayWeather![1].avgTemp_c
+                : _data.dayWeather![1].avgTemp_f,
             style: context.textTheme.bodyLarge,
-            children: const [
+            children: [
               TextSpan(
-                text: "℃",
-                style: TextStyle(fontSize: 24),
+                text: isCelcius ? "℃" : "°F",
+                style: const TextStyle(fontSize: 24),
               ),
             ],
           ),

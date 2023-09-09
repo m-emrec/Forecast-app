@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
@@ -18,10 +19,14 @@ class ExpandedInfoSection extends StatefulWidget {
 class _ExpandedInfoSectionState extends State<ExpandedInfoSection> {
   late GetIt sl;
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
+
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
+    _prefs = sl<SharedPreferences>();
+
     super.initState();
   }
 
@@ -43,7 +48,9 @@ class _ExpandedInfoSectionState extends State<ExpandedInfoSection> {
               children: [
                 Image.asset("wind-icon".toPng),
                 Text(
-                  "${_data.currentWeather!.wind!} km/H",
+                  _prefs.getString("windUnit") == "kph"
+                      ? "${_data.currentWeather!.wind_kph!} km/H"
+                      : "${_data.currentWeather!.wind_mph!} m/H",
                   style: context.textTheme.labelMedium,
                 ),
                 Text(
@@ -116,10 +123,12 @@ class CollapsedInfoSection extends StatefulWidget {
 class _CollapsedInfoSectionState extends State<CollapsedInfoSection> {
   late GetIt sl;
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
+    _prefs = sl<SharedPreferences>();
     super.initState();
   }
 
@@ -142,7 +151,9 @@ class _CollapsedInfoSectionState extends State<CollapsedInfoSection> {
               children: [
                 Image.asset("wind-icon".toPng),
                 Text(
-                  "${_data.currentWeather!.wind!} km/H",
+                  _prefs.getString("windUnit") == "kph"
+                      ? "${_data.currentWeather!.wind_kph!} km/H"
+                      : "${_data.currentWeather!.wind_mph!} m/H",
                   style: context.textTheme.labelMedium,
                 ),
                 Text(

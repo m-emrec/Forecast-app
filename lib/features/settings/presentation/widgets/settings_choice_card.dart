@@ -3,21 +3,32 @@
 import 'package:flutter/material.dart';
 import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
+import 'package:weather/features/settings/presentation/bloc/settings_bloc.dart';
 
 class SettingsChoiceCard extends StatefulWidget {
   const SettingsChoiceCard({
     super.key,
     required this.title,
     required this.choices,
+    required this.selected,
+    required this.onSelected,
   });
   final String title;
+  final Function onSelected;
   final List<String> choices;
+  final String selected;
   @override
   State<SettingsChoiceCard> createState() => _SettingsChoiceCardState();
 }
 
 class _SettingsChoiceCardState extends State<SettingsChoiceCard> {
-  String _selectedVal = "Celcius";
+  late String _selectedVal;
+  @override
+  void initState() {
+    _selectedVal = widget.selected;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -38,7 +49,8 @@ class _SettingsChoiceCardState extends State<SettingsChoiceCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: widget.choices.map((label) {
-                    bool _isSelected = _selectedVal == label;
+                    bool _isSelected =
+                        _selectedVal.toLowerCase() == label.toLowerCase();
                     return ChoiceChip(
                       labelPadding: const EdgeInsets.symmetric(horizontal: 32),
                       labelStyle: context.textTheme.labelMedium!.copyWith(
@@ -61,6 +73,7 @@ class _SettingsChoiceCardState extends State<SettingsChoiceCard> {
 
                       onSelected: (value) {
                         if (value) {
+                          widget.onSelected(label);
                           setState(() {
                             _selectedVal = label;
                           });

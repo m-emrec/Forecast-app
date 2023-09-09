@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
@@ -18,10 +19,12 @@ class DailyWeatherSection extends StatefulWidget {
 class _DailyWeatherSectionState extends State<DailyWeatherSection> {
   late GetIt sl;
   late WeatherEntity _data;
+  late SharedPreferences _prefs;
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
+    _prefs = sl<SharedPreferences>();
 
     super.initState();
   }
@@ -69,7 +72,9 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
 
                 /// Deggree
                 trailing: Text(
-                  "${day.avgTemp}°",
+                  _prefs.getString("tempUnit") == "celcius"
+                      ? "${day.avgTemp_c}°"
+                      : "${day.avgTemp_f}°",
                   style: context.textTheme.labelMedium,
                 ),
               ),

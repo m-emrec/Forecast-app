@@ -36,6 +36,7 @@ class WeatherRepoImpl implements WeatherRepo {
     try {
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
       if (!serviceEnabled) {
         // Location services are not enabled don't continue
         // accessing the position and request users of the
@@ -47,6 +48,7 @@ class WeatherRepoImpl implements WeatherRepo {
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
+
         if (permission == LocationPermission.denied) {
           // Permissions are denied, next time you could try
           // requesting permissions again (this is also where

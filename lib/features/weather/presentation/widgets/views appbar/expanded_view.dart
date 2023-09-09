@@ -92,11 +92,15 @@ class _ExpandedViewState extends State<ExpandedView> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
+                          onTap: () => Navigator.of(context)
+                              .push(
                             MaterialPageRoute(
                               builder: (_) => const SettingsPage(),
                             ),
-                          ),
+                          )
+                              .then((value) {
+                            _weatherBloc.add(WeatherFetchDataEvent());
+                          }),
                           child: const Icon(Icons.settings_outlined),
                         ),
                       ),
