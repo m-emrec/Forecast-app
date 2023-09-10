@@ -49,6 +49,7 @@ class _ExpandedViewState extends State<ExpandedView> {
         return SizedBox(
           height: height,
           child: RefreshIndicator.adaptive(
+            triggerMode: RefreshIndicatorTriggerMode.onEdge,
             displacement: 100,
             onRefresh: () {
               return Future.delayed(
@@ -57,7 +58,9 @@ class _ExpandedViewState extends State<ExpandedView> {
               );
             },
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

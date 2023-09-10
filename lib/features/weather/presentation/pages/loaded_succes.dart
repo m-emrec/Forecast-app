@@ -50,7 +50,7 @@ class _LoadedDataViewState extends State<LoadedDataView> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          // physics: const AlwaysScrollableScrollPhysics(),
           child: GestureDetector(
             onVerticalDragEnd: (details) => viewManagerFunc(details),
             child: const Column(

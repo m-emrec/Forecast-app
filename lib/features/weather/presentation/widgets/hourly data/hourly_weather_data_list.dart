@@ -80,21 +80,24 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     /// Deggree
-                    Text(
-                      _prefs.getString("tempUnit") == "Celcius"
-                          ? "${hourlyWeather.temp_c}°"
-                          : "${hourlyWeather.temp_f}",
-                      style: context.textTheme.bodySmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        shadows: _isCurrentTime
-                            ? [
-                                const BoxShadow(
-                                  offset: Offset(0, 2),
-                                  blurRadius: 12,
-                                ),
-                              ]
-                            : null,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        _prefs.getString("tempUnit") == "Celcius"
+                            ? "${hourlyWeather.temp_c}°"
+                            : "${hourlyWeather.temp_f}℉",
+                        style: context.textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          shadows: _isCurrentTime
+                              ? [
+                                  const BoxShadow(
+                                    offset: Offset(0, 2),
+                                    blurRadius: 12,
+                                  ),
+                                ]
+                              : null,
+                        ),
                       ),
                     ),
 
