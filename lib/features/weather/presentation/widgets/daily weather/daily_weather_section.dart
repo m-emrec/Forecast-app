@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/empty_padding.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 
 import '../../../domain/entities/weather_entity.dart';
 
@@ -20,13 +22,31 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
   late GetIt sl;
   late WeatherEntity _data;
   late SharedPreferences _prefs;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(() {});
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
     _prefs = sl<SharedPreferences>();
-
+    _viewManager();
     super.initState();
+  }
+
+  _viewManager() {
+    _scrollController.addListener(() {
+      final pos = _scrollController.position.pixels;
+      if (pos < -10) {
+        sl<WeatherBloc>().add(ExpandedViewEvent());
+      }
+    });
   }
 
   @override
@@ -36,6 +56,7 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 32),
         child: ListView.builder(
+          controller: _scrollController,
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,

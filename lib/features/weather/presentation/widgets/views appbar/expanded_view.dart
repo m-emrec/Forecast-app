@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,12 +31,32 @@ class _ExpandedViewState extends State<ExpandedView> {
   late GetIt sl;
   late WeatherBloc _weatherBloc;
   late WeatherEntity _data;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _scrollController.removeListener(() {});
+    super.dispose();
+  }
+
   @override
   void initState() {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
     _weatherBloc = sl<WeatherBloc>();
+    _viewManager();
     super.initState();
+  }
+
+  _viewManager() {
+    _scrollController.addListener(() {
+      final pos = _scrollController.position.pixels;
+      if (pos > 25) {
+        // logger.i("Collapsed");
+        _weatherBloc.add(CollapsedViewEvent());
+      }
+    });
   }
 
   @override
@@ -48,93 +69,93 @@ class _ExpandedViewState extends State<ExpandedView> {
 
         return SizedBox(
           height: height,
-          child: RefreshIndicator.adaptive(
-            triggerMode: RefreshIndicatorTriggerMode.onEdge,
-            displacement: 100,
-            onRefresh: () {
-              return Future.delayed(
-                const Duration(seconds: 1),
-                () => _weatherBloc.add(WeatherFetchDataEvent()),
-              );
-            },
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  AppBar(
-                    forceMaterialTransparency: true,
-                    centerTitle: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AppBar(
+                forceMaterialTransparency: true,
+                centerTitle: true,
 
-                    /// Locations button
-                    leading: GestureDetector(
-                      onTap: () => Navigator.of(context).push(
+                /// Locations button
+                leading: GestureDetector(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const SearchLocationPage(),
+                    ),
+                  ),
+                  child: Image.asset("menu-button".toPng),
+                ),
+
+                /// Title
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.location_on_outlined),
+                    8.pw,
+                    Text(
+                      _data.currentWeather!.locationName!,
+                      style: context.textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+
+                /// Settings button
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context)
+                          .push(
                         MaterialPageRoute(
-                          builder: (_) => const SearchLocationPage(),
+                          builder: (_) => const SettingsPage(),
                         ),
-                      ),
-                      child: Image.asset("menu-button".toPng),
-                    ),
-
-                    /// Title
-                    title: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.location_on_outlined),
-                        8.pw,
-                        Text(
-                          _data.currentWeather!.locationName!,
-                          style: context.textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
-
-                    /// Settings button
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: GestureDetector(
-                          onTap: () => Navigator.of(context)
-                              .push(
-                            MaterialPageRoute(
-                              builder: (_) => const SettingsPage(),
-                            ),
-                          )
-                              .then((value) {
-                            _weatherBloc.add(WeatherFetchDataEvent());
-                          }),
-                          child: const Icon(Icons.settings_outlined),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  /// Some spacing
-                  16.ph,
-
-                  /// Weather Image
-                  Image(
-                    height: height * 0.35,
-                    width: width * 0.5,
-                    image: AssetImage(
-                      _data.currentWeather!.condition!.getIcon.toPngDayIcon,
+                      )
+                          .then((value) {
+                        _weatherBloc.add(WeatherFetchDataEvent());
+                      }),
+                      child: const Icon(Icons.settings_outlined),
                     ),
                   ),
-
-                  /// Title Section
-                  const TitleSectionExpanded(),
-                  16.ph,
-                  const Divider(),
-
-                  /// More Info Section
-                  const ExpandedInfoSection(),
-                  // 32.ph,
                 ],
               ),
-            ),
+
+              /// Some spacing
+              // 16.ph,
+              RefreshIndicator.adaptive(
+                onRefresh: () {
+                  return Future.delayed(
+                    const Duration(seconds: 1),
+                    () => _weatherBloc.add(WeatherFetchDataEvent()),
+                  );
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollController,
+                  child: Column(
+                    children: [
+                      /// Weather Image
+                      Image(
+                        height: height * 0.35,
+                        width: width * 0.5,
+                        image: AssetImage(
+                          _data.currentWeather!.condition!.getIcon.toPngDayIcon,
+                        ),
+                      ),
+
+                      /// Title Section
+                      const TitleSectionExpanded(),
+                      16.ph,
+                      const Divider(),
+
+                      /// More Info Section
+                      const ExpandedInfoSection(),
+                      // 32.ph,
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
