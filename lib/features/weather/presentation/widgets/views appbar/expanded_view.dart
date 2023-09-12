@@ -50,13 +50,15 @@ class _ExpandedViewState extends State<ExpandedView> {
   }
 
   _viewManager() {
-    _scrollController.addListener(() {
-      final pos = _scrollController.position.pixels;
-      if (pos > 25) {
-        // logger.i("Collapsed");
-        _weatherBloc.add(CollapsedViewEvent());
-      }
-    });
+    _scrollController.addListener(
+      () {
+        final pos = _scrollController.position.pixels;
+        if (pos > 25) {
+          // logger.i("Collapsed");
+          _weatherBloc.add(CollapsedViewEvent());
+        }
+      },
+    );
   }
 
   @override
@@ -73,6 +75,7 @@ class _ExpandedViewState extends State<ExpandedView> {
             mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              /// AppBar
               AppBar(
                 forceMaterialTransparency: true,
                 centerTitle: true,
@@ -120,17 +123,17 @@ class _ExpandedViewState extends State<ExpandedView> {
                 ],
               ),
 
-              /// Some spacing
-              // 16.ph,
               RefreshIndicator.adaptive(
                 onRefresh: () {
                   return Future.delayed(
-                    const Duration(seconds: 1),
+                    const Duration(milliseconds: 500),
                     () => _weatherBloc.add(WeatherFetchDataEvent()),
                   );
                 },
                 child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
                   controller: _scrollController,
                   child: Column(
                     children: [
@@ -139,13 +142,17 @@ class _ExpandedViewState extends State<ExpandedView> {
                         height: height * 0.35,
                         width: width * 0.5,
                         image: AssetImage(
-                          _data.currentWeather!.condition!.getIcon.toPngDayIcon,
+                          _data.currentWeather!.isDay!
+                              ? _data.currentWeather!.condition!.getIcon
+                                  .toPngDayIcon
+                              : _data.currentWeather!.condition!.getIcon
+                                  .toPngNightIcon,
                         ),
                       ),
 
                       /// Title Section
                       const TitleSectionExpanded(),
-                      16.ph,
+                      32.ph,
                       const Divider(),
 
                       /// More Info Section

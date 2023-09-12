@@ -65,7 +65,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ),
     );
     if (dataState is DataSuccess) {
-      logger.i(dataState.data);
       await _saveSettingsUseCase(dataState.data!);
     } else {
       logger.e(dataState.exception);
@@ -74,7 +73,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   FutureOr<void> onChangeLocationSettingsEvent(
       ChangeLocationSettingsEvent event, Emitter<SettingsState> emit) async {
-    logger.i(event.newVal);
     final dataState = _changeSettingsUseCase(
       SettingsEntitiy(
         temperatureUnit: prefs.getString("tempUnit"),
@@ -84,7 +82,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ),
     );
     if (dataState is DataSuccess) {
-      logger.i(dataState.data);
       await _saveSettingsUseCase(dataState.data!);
     } else {
       logger.e(dataState.exception);
@@ -103,7 +100,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ),
     );
     if (dataState is DataSuccess) {
-      logger.i(dataState.data);
       await _saveSettingsUseCase(dataState.data!);
     } else {
       logger.e(dataState.exception);
@@ -122,7 +118,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       ),
     );
     if (dataState is DataSuccess) {
-      logger.i(dataState.data);
       await _saveSettingsUseCase(dataState.data!);
       emit(LoadedSettingsSuccessState(dataState.data!));
     } else {

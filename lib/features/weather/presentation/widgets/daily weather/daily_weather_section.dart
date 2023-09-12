@@ -43,7 +43,7 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
   _viewManager() {
     _scrollController.addListener(() {
       final pos = _scrollController.position.pixels;
-      if (pos < -10) {
+      if (pos < -100) {
         sl<WeatherBloc>().add(ExpandedViewEvent());
       }
     });
@@ -75,20 +75,24 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
                 ),
 
                 /// Condition
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      height: 32,
-                      width: 32,
-                      image: AssetImage(day.condition.getIcon.toPngDayIcon),
-                    ),
-                    4.pw,
-                    Text(
-                      day.condition,
-                      style: context.textTheme.labelSmall,
-                    ),
-                  ],
+                title: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        height: 32,
+                        width: 32,
+                        image: AssetImage(day.condition.getIcon.toPngDayIcon),
+                      ),
+                      4.pw,
+                      Text(
+                        day.condition,
+                        style: context.textTheme.labelSmall,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
 
                 /// Deggree

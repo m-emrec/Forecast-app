@@ -47,6 +47,7 @@ dependencies:
   geolocator: ^10.0.0
   either_dart: ^1.0.0
   shared_preferences: ^2.2.1
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

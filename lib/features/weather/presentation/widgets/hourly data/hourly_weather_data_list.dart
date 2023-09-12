@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather/core/constants/logger.dart';
 import 'package:weather/core/extensions/context_extension.dart';
 import 'package:weather/core/extensions/image_extension.dart';
 import 'package:weather/core/extensions/weather_icon_manager.dart';
@@ -24,26 +26,41 @@ class HourlyWeatherDataList extends StatefulWidget {
 class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
   late WeatherEntity _data;
   late SharedPreferences _prefs;
+  final ItemScrollController _itemScrollController = ItemScrollController();
+  late int _currentTimeIndex;
   @override
   void initState() {
     _prefs = sl<SharedPreferences>();
     _data = widget.data;
+
+    _currentTimeIndex = _findCurrentTime() ?? 0;
     super.initState();
+  }
+
+  _findCurrentTime() {
+    final int _index = _data.dayWeather!.first.hourlyWeather
+        .indexWhere((element) => element.time.hour == DateTime.now().hour);
+
+    return _index < 2 ? _index : _index - 2;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.12,
-      child: ListView.builder(
+      child: ScrollablePositionedList.builder(
         physics: const BouncingScrollPhysics(),
-        clipBehavior: Clip.none,
+        // clipBehavior: Clip.none,
+        initialScrollIndex: _currentTimeIndex,
+
+        itemScrollController: _itemScrollController,
         scrollDirection: Axis.horizontal,
         itemCount: _data.dayWeather?.first.hourlyWeather.length ?? 24,
         itemBuilder: (BuildContext context, int index) {
           final hourlyWeather = _data.dayWeather!.first.hourlyWeather[index];
           final bool _isCurrentTime =
               hourlyWeather.time.hour == DateTime.now().hour;
+
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
             child: AspectRatio(
@@ -106,7 +123,11 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                       height: 24,
                       width: 24,
                       image: AssetImage(
-                        hourlyWeather.condition.getIcon.toPngDayIcon,
+                        _data.currentWeather!.isDay!
+                            ? _data
+                                .currentWeather!.condition!.getIcon.toPngDayIcon
+                            : _data.currentWeather!.condition!.getIcon
+                                .toPngNightIcon,
                       ),
                     ),
 
