@@ -25,8 +25,6 @@ class SearchLocationPage extends StatefulWidget {
 }
 
 class _SearchLocationPageState extends State<SearchLocationPage> {
-  ///
-  final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   late GetIt sl;
   late SearchLocationBloc _searchLocationBloc;

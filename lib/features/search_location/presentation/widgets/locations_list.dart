@@ -52,6 +52,11 @@ class _LocationsListState extends State<LocationsList> {
               child: Text(state.exception),
             );
           }
+          if (state is LodaingState) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return const SizedBox();
         },
       ),

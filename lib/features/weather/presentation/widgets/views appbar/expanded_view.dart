@@ -91,16 +91,19 @@ class _ExpandedViewState extends State<ExpandedView> {
                 ),
 
                 /// Title
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.location_on_outlined),
-                    8.pw,
-                    Text(
-                      _data.currentWeather!.locationName!,
-                      style: context.textTheme.titleLarge,
-                    ),
-                  ],
+                title: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.location_on_outlined),
+                      8.pw,
+                      Text(
+                        _data.currentWeather!.locationName!,
+                        style: context.textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
                 ),
 
                 /// Settings button
