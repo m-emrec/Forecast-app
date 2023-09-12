@@ -28,12 +28,17 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
   late SharedPreferences _prefs;
   final ItemScrollController _itemScrollController = ItemScrollController();
   late int _currentTimeIndex;
+  late bool _isCelcius;
   @override
   void initState() {
     _prefs = sl<SharedPreferences>();
     _data = widget.data;
 
     _currentTimeIndex = _findCurrentTimeIndex() ?? 0;
+
+    _isCelcius = _prefs.getString("tempUnit") != null
+        ? _prefs.getString("tempUnit") == "Celcius"
+        : true;
     super.initState();
   }
 
@@ -100,7 +105,7 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        _prefs.getString("tempUnit") == "Celcius"
+                        _isCelcius
                             ? "${hourlyWeather.temp_c}°"
                             : "${hourlyWeather.temp_f}℉",
                         style: context.textTheme.bodySmall!.copyWith(

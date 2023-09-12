@@ -62,6 +62,7 @@ class _BState extends State<B> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController a = ScrollController();
     return Center(
       child: Stack(
         children: [
@@ -85,6 +86,9 @@ class _BState extends State<B> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
+          ListView.builder(itemBuilder: (context, index) {
+            return Card();
+          })
         ],
       ),
     );

@@ -24,7 +24,9 @@ class _TitleSectionExpandedState extends State<TitleSectionExpanded> {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
     _prefs = sl<SharedPreferences>();
-    isCelcius = _prefs.getString("tempUnit") == "Celcius";
+    isCelcius = _prefs.getString("tempUnit") != null
+        ? _prefs.getString("tempUnit") == "Celcius"
+        : true;
     super.initState();
   }
 
@@ -88,7 +90,10 @@ class _TitleSectionCollapsedState extends State<TitleSectionCollapsed> {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
     _prefs = sl<SharedPreferences>();
-    isCelcius = _prefs.getString("tempUnit") == "Celcius";
+    isCelcius = _prefs.getString("tempUnit") != null
+        ? _prefs.getString("tempUnit") == "Celcius"
+        : true;
+    ;
     super.initState();
   }
 

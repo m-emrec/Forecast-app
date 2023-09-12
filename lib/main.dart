@@ -11,7 +11,6 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeDependencies();
-
   sl<LocationViewModel>().query = sl<SharedPreferences>().getString("query");
   runApp(const MyApp());
 }

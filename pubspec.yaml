@@ -58,16 +58,20 @@ dev_dependencies:
   flutter_launcher_icons:
     
 
-flutter_icons:
-  # image_path: "icons/icon.png"
-  # android: true
-  # ios: true
-  # remove_alpha_ios: true
-  # resize_behavior: shrink_only
+flutter_launcher_icons:
+  image_path: "lib/core/assets/app_icon.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  resize_behavior: shrink_only
 
 flutter_native_splash:
-  color : "#0000F9"
-  image: "lib/core/assets/condition_icons/day/clouds.png"
+  color : "#1E88F6"
+  image: "lib/core/assets/splash_icon.png"
+  android_12:
+    color: "#1E88F6"
+    image: "lib/core/assets/splash_icon.png"
+
   
 
   # The "flutter_lints" package below contains a set of recommended lints to

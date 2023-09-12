@@ -23,7 +23,7 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
   late WeatherEntity _data;
   late SharedPreferences _prefs;
   final ScrollController _scrollController = ScrollController();
-
+  late bool _isCelcius;
   @override
   void dispose() {
     _scrollController.removeListener(() {});
@@ -36,6 +36,9 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
     sl = GetIt.instance;
     _data = sl<WeatherEntity>();
     _prefs = sl<SharedPreferences>();
+    _isCelcius = _prefs.getString("tempUnit") != null
+        ? _prefs.getString("tempUnit") == "Celcius"
+        : true;
     _viewManager();
     super.initState();
   }
@@ -97,9 +100,7 @@ class _DailyWeatherSectionState extends State<DailyWeatherSection> {
 
                 /// Deggree
                 trailing: Text(
-                  _prefs.getString("tempUnit") == "Celcius"
-                      ? "${day.avgTemp_c}°"
-                      : "${day.avgTemp_f}°",
+                  _isCelcius ? "${day.avgTemp_c}°" : "${day.avgTemp_f}°F",
                   style: context.textTheme.labelMedium,
                 ),
               ),
