@@ -48,10 +48,27 @@ dependencies:
   either_dart: ^1.0.0
   shared_preferences: ^2.2.1
   scrollable_positioned_list: ^0.3.8
+  flutter_native_splash: ^2.3.2
+ 
+ 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
+    
+
+flutter_icons:
+  # image_path: "icons/icon.png"
+  # android: true
+  # ios: true
+  # remove_alpha_ios: true
+  # resize_behavior: shrink_only
+
+flutter_native_splash:
+  color : "#0000F9"
+  image: "lib/core/assets/condition_icons/day/clouds.png"
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -33,11 +33,11 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
     _prefs = sl<SharedPreferences>();
     _data = widget.data;
 
-    _currentTimeIndex = _findCurrentTime() ?? 0;
+    _currentTimeIndex = _findCurrentTimeIndex() ?? 0;
     super.initState();
   }
 
-  _findCurrentTime() {
+  _findCurrentTimeIndex() {
     final int _index = _data.dayWeather!.first.hourlyWeather
         .indexWhere((element) => element.time.hour == DateTime.now().hour);
 

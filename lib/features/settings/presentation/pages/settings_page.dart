@@ -83,21 +83,21 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   32.ph,
                   //* Notifications
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Notifications"),
-                      4.ph,
-                      SettingsSwitchCard(
-                        title: "Allow Notifications",
-                        icon: Icons.notifications_active_outlined,
-                        value: state.settings.allowNotification!,
-                        onChanged: (bool val) => _settingsBloc
-                            .add(ChangeNotificationSettingsEvent(val)),
-                      ),
-                    ],
-                  ),
-                  32.ph,
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text("Notifications"),
+                  //     4.ph,
+                  //     SettingsSwitchCard(
+                  //       title: "Allow Notifications",
+                  //       icon: Icons.notifications_active_outlined,
+                  //       value: state.settings.allowNotification!,
+                  //       onChanged: (bool val) => _settingsBloc
+                  //           .add(ChangeNotificationSettingsEvent(val)),
+                  //     ),
+                  //   ],
+                  // ),
+                  // 32.ph,
                   //* Permissions
                   // Column(
                   //   crossAxisAlignment: CrossAxisAlignment.start,
