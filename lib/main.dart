@@ -4,7 +4,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/config/theme/app_theme.dart';
 import 'package:weather/core/resources/error_management_widget.dart';
-import 'package:weather/core/resources/error_manager.dart';
 import 'package:weather/core/resources/location_model.dart';
 import 'package:weather/injection_container.dart';
 

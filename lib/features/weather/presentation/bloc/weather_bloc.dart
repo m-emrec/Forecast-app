@@ -59,6 +59,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         sl<SharedPreferences>().remove("query");
         _coordinate = "$latitude,$longitude";
       }
+      if (location is DataFailed) {
+        emit(
+          WeatherLoadedFailState(
+              error: location.exception ?? "An error occured"),
+        );
+      }
 
       final dataState =
           await _getWeatherDataUseCase.getWeatherData(_coordinate);
