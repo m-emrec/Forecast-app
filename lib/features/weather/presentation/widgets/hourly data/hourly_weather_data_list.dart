@@ -11,6 +11,7 @@ import 'package:weather/core/extensions/weather_icon_manager.dart';
 
 import '../../../../../injection_container.dart';
 import '../../../domain/entities/weather_entity.dart';
+import 'hourly_weather_item.dart';
 
 class HourlyWeatherDataList extends StatefulWidget {
   final WeatherEntity data;
@@ -78,83 +79,89 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                   _scrollManipulated = true;
                 }
 
-                return Container(
-                  clipBehavior: Clip.none,
-                  decoration: BoxDecoration(
-                    color: _isCurrentTime ? null : Colors.transparent,
-                    border: Border.all(
-                      width: 1,
-                      color: const Color(0xFFDBEAFD),
-                    ),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF11B5FD),
-                        Color(0xFF0F68F4),
-                      ],
-                    ),
-                    boxShadow: _isCurrentTime
-                        ? [
-                            BoxShadow(
-                              color: const Color(0xFF73B2EF).withOpacity(0.5),
-                              offset: const Offset(0, 0),
-                              spreadRadius: 1,
-                              blurRadius: 8,
-                            ),
-                          ]
-                        : null,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        /// Deggree
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            _isCelcius
-                                ? "${hourlyWeather.temp_c}°"
-                                : "${hourlyWeather.temp_f}℉",
-                            style: context.textTheme.bodySmall!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              shadows: _isCurrentTime
-                                  ? [
-                                      const BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 12,
-                                      ),
-                                    ]
-                                  : null,
-                            ),
-                          ),
-                        ),
-
-                        /// Weather Icon
-                        Image(
-                          height: 24,
-                          width: 24,
-                          image: AssetImage(
-                            _data.currentWeather!.isDay!
-                                ? _data.currentWeather!.condition!.getIcon
-                                    .toPngDayIcon
-                                : _data.currentWeather!.condition!.getIcon
-                                    .toPngNightIcon,
-                          ),
-                        ),
-
-                        /// Hour
-                        Text(
-                          DateFormat.Hm().format(hourlyWeather.time).toString(),
-                          style: context.textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ),
+                return HourlyWeatherItem(
+                  data: _data,
+                  hourlyWeather: hourlyWeather,
+                  isCelcius: _isCelcius,
+                  isCurrentTime: _isCurrentTime,
                 );
+                // Container(
+                //   clipBehavior: Clip.none,
+                //   decoration: BoxDecoration(
+                //     color: _isCurrentTime ? null : Colors.transparent,
+                //     border: Border.all(
+                //       width: 1,
+                //       color: const Color(0xFFDBEAFD),
+                //     ),
+                //     gradient: const LinearGradient(
+                //       begin: Alignment.topCenter,
+                //       end: Alignment.bottomCenter,
+                //       colors: [
+                //         Color(0xFF11B5FD),
+                //         Color(0xFF0F68F4),
+                //       ],
+                //     ),
+                //     boxShadow: _isCurrentTime
+                //         ? [
+                //             BoxShadow(
+                //               color: const Color(0xFF73B2EF).withOpacity(0.5),
+                //               offset: const Offset(0, 0),
+                //               spreadRadius: 1,
+                //               blurRadius: 8,
+                //             ),
+                //           ]
+                //         : null,
+                //     borderRadius: BorderRadius.circular(24),
+                //   ),
+                //   child: FittedBox(
+                //     fit: BoxFit.scaleDown,
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //       children: [
+                //         /// Deggree
+                //         FittedBox(
+                //           fit: BoxFit.scaleDown,
+                //           child: Text(
+                //             _isCelcius
+                //                 ? "${hourlyWeather.temp_c}°"
+                //                 : "${hourlyWeather.temp_f}℉",
+                //             style: context.textTheme.bodySmall!.copyWith(
+                //               fontWeight: FontWeight.w600,
+                //               color: Colors.white,
+                //               shadows: _isCurrentTime
+                //                   ? [
+                //                       const BoxShadow(
+                //                         offset: Offset(0, 2),
+                //                         blurRadius: 12,
+                //                       ),
+                //                     ]
+                //                   : null,
+                //             ),
+                //           ),
+                //         ),
+
+                //         /// Weather Icon
+                //         Image(
+                //           height: 24,
+                //           width: 24,
+                //           image: AssetImage(
+                //             _data.currentWeather!.isDay!
+                //                 ? _data.currentWeather!.condition!.getIcon
+                //                     .toPngDayIcon
+                //                 : _data.currentWeather!.condition!.getIcon
+                //                     .toPngNightIcon,
+                //           ),
+                //         ),
+
+                //         /// Hour
+                //         Text(
+                //           DateFormat.Hm().format(hourlyWeather.time).toString(),
+                //           style: context.textTheme.bodySmall,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // );
               }),
             ),
           );
