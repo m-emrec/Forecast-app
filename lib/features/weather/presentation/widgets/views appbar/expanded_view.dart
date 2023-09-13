@@ -155,7 +155,7 @@ class _ExpandedViewState extends State<ExpandedView> {
 
                       /// Title Section
                       const TitleSectionExpanded(),
-                      32.ph,
+                      (height * 0.02).ph,
                       const Divider(),
 
                       /// More Info Section

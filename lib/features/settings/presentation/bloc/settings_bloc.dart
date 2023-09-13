@@ -90,7 +90,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   FutureOr<void> onChangeTemperatureSettingsEvent(
       ChangeTemperatureSettingsEvent event, Emitter<SettingsState> emit) async {
-    logger.i(event.newVal);
     final dataState = _changeSettingsUseCase(
       SettingsEntitiy(
         allowLocation: prefs.getBool("allowLocation"),

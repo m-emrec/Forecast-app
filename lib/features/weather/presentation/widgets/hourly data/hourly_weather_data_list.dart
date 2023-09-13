@@ -106,50 +106,53 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
                         : null,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      /// Deggree
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          _isCelcius
-                              ? "${hourlyWeather.temp_c}°"
-                              : "${hourlyWeather.temp_f}℉",
-                          style: context.textTheme.bodySmall!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            shadows: _isCurrentTime
-                                ? [
-                                    const BoxShadow(
-                                      offset: Offset(0, 2),
-                                      blurRadius: 12,
-                                    ),
-                                  ]
-                                : null,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        /// Deggree
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            _isCelcius
+                                ? "${hourlyWeather.temp_c}°"
+                                : "${hourlyWeather.temp_f}℉",
+                            style: context.textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              shadows: _isCurrentTime
+                                  ? [
+                                      const BoxShadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 12,
+                                      ),
+                                    ]
+                                  : null,
+                            ),
                           ),
                         ),
-                      ),
 
-                      /// Weather Icon
-                      Image(
-                        height: 24,
-                        width: 24,
-                        image: AssetImage(
-                          _data.currentWeather!.isDay!
-                              ? _data.currentWeather!.condition!.getIcon
-                                  .toPngDayIcon
-                              : _data.currentWeather!.condition!.getIcon
-                                  .toPngNightIcon,
+                        /// Weather Icon
+                        Image(
+                          height: 24,
+                          width: 24,
+                          image: AssetImage(
+                            _data.currentWeather!.isDay!
+                                ? _data.currentWeather!.condition!.getIcon
+                                    .toPngDayIcon
+                                : _data.currentWeather!.condition!.getIcon
+                                    .toPngNightIcon,
+                          ),
                         ),
-                      ),
 
-                      /// Hour
-                      Text(
-                        DateFormat.Hm().format(hourlyWeather.time).toString(),
-                        style: context.textTheme.bodySmall,
-                      ),
-                    ],
+                        /// Hour
+                        Text(
+                          DateFormat.Hm().format(hourlyWeather.time).toString(),
+                          style: context.textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),
