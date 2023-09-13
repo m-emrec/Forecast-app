@@ -26,9 +26,10 @@ class HourlyWeatherDataList extends StatefulWidget {
 class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
   late WeatherEntity _data;
   late SharedPreferences _prefs;
-  final ItemScrollController _itemScrollController = ItemScrollController();
+  final ScrollController _scrollController = ScrollController();
   late int _currentTimeIndex;
   late bool _isCelcius;
+  bool _scrollManipulated = false;
   @override
   void initState() {
     _prefs = sl<SharedPreferences>();
@@ -46,19 +47,17 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
     final int _index = _data.dayWeather!.first.hourlyWeather
         .indexWhere((element) => element.time.hour == DateTime.now().hour);
 
-    return _index < 2 ? _index : _index - 2;
+    return _index;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.12,
-      child: ScrollablePositionedList.builder(
+      child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        // clipBehavior: Clip.none,
-        initialScrollIndex: _currentTimeIndex,
-
-        itemScrollController: _itemScrollController,
+        clipBehavior: Clip.none,
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
         itemCount: _data.dayWeather?.first.hourlyWeather.length ?? 24,
         itemBuilder: (BuildContext context, int index) {
@@ -70,80 +69,90 @@ class _HourlyWeatherDataListState extends State<HourlyWeatherDataList> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
             child: AspectRatio(
               aspectRatio: 2 / 3,
-              child: Container(
-                clipBehavior: Clip.none,
-                decoration: BoxDecoration(
-                  color: _isCurrentTime ? null : Colors.transparent,
-                  border: Border.all(
-                    width: 1,
-                    color: const Color(0xFFDBEAFD),
+              child: LayoutBuilder(builder: (context, constraints) {
+                if (!_scrollManipulated && _currentTimeIndex != 0) {
+                  _scrollController.animateTo(
+                      _currentTimeIndex / 5 * constraints.maxWidth * 5,
+                      duration: Duration(milliseconds: 750),
+                      curve: Curves.easeIn);
+                  _scrollManipulated = true;
+                }
+
+                return Container(
+                  clipBehavior: Clip.none,
+                  decoration: BoxDecoration(
+                    color: _isCurrentTime ? null : Colors.transparent,
+                    border: Border.all(
+                      width: 1,
+                      color: const Color(0xFFDBEAFD),
+                    ),
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF11B5FD),
+                        Color(0xFF0F68F4),
+                      ],
+                    ),
+                    boxShadow: _isCurrentTime
+                        ? [
+                            BoxShadow(
+                              color: const Color(0xFF73B2EF).withOpacity(0.5),
+                              offset: const Offset(0, 0),
+                              spreadRadius: 1,
+                              blurRadius: 8,
+                            ),
+                          ]
+                        : null,
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF11B5FD),
-                      Color(0xFF0F68F4),
-                    ],
-                  ),
-                  boxShadow: _isCurrentTime
-                      ? [
-                          BoxShadow(
-                            color: const Color(0xFF73B2EF).withOpacity(0.5),
-                            offset: const Offset(0, 0),
-                            spreadRadius: 1,
-                            blurRadius: 8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      /// Deggree
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          _isCelcius
+                              ? "${hourlyWeather.temp_c}°"
+                              : "${hourlyWeather.temp_f}℉",
+                          style: context.textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            shadows: _isCurrentTime
+                                ? [
+                                    const BoxShadow(
+                                      offset: Offset(0, 2),
+                                      blurRadius: 12,
+                                    ),
+                                  ]
+                                : null,
                           ),
-                        ]
-                      : null,
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    /// Deggree
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        _isCelcius
-                            ? "${hourlyWeather.temp_c}°"
-                            : "${hourlyWeather.temp_f}℉",
-                        style: context.textTheme.bodySmall!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          shadows: _isCurrentTime
-                              ? [
-                                  const BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 12,
-                                  ),
-                                ]
-                              : null,
                         ),
                       ),
-                    ),
 
-                    /// Weather Icon
-                    Image(
-                      height: 24,
-                      width: 24,
-                      image: AssetImage(
-                        _data.currentWeather!.isDay!
-                            ? _data
-                                .currentWeather!.condition!.getIcon.toPngDayIcon
-                            : _data.currentWeather!.condition!.getIcon
-                                .toPngNightIcon,
+                      /// Weather Icon
+                      Image(
+                        height: 24,
+                        width: 24,
+                        image: AssetImage(
+                          _data.currentWeather!.isDay!
+                              ? _data.currentWeather!.condition!.getIcon
+                                  .toPngDayIcon
+                              : _data.currentWeather!.condition!.getIcon
+                                  .toPngNightIcon,
+                        ),
                       ),
-                    ),
 
-                    /// Hour
-                    Text(
-                      DateFormat.Hm().format(hourlyWeather.time).toString(),
-                      style: context.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
+                      /// Hour
+                      Text(
+                        DateFormat.Hm().format(hourlyWeather.time).toString(),
+                        style: context.textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ),
           );
         },

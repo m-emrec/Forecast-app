@@ -46,10 +46,9 @@ class _HomePageState extends State<HomePage> {
           case WeatherLoadedFailState:
             final execeptionState = state as WeatherLoadedFailState;
             logger.e(execeptionState.error);
-            return Scaffold(
-              body: ErrorAlert(
-                error: execeptionState.error,
-              ),
+            logger.e("Erroror");
+            return ErrorWidget(
+              execeptionState.error,
             );
 
           default:
