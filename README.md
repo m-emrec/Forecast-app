@@ -35,7 +35,7 @@ Welcome to the Forecast App, your go-to weather companion for staying informed a
 
 ## Getting Started
 
-To get started with Quizzy, follow these steps:
+To get started with Forecast App, follow these steps:
 ##### 1-Clone the repository:
 git clone https://github.com/memrec45/Forecast-app.git
 
