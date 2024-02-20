@@ -37,7 +37,7 @@ Welcome to the Forecast App, your go-to weather companion for staying informed a
 
 To get started with Forecast App, follow these steps:
 ##### 1-Clone the repository:
-git clone https://github.com/memrec45/Forecast-app.git
+git clone https://github.com/m-emrec/Forecast-app.git
 
 ##### 2-Navigate to the project directory:
 cd Forecast-app
